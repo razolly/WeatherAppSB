@@ -1,6 +1,6 @@
 package com.example.razli.weatherappsb.util
 
-interface BaseView<T> {
+interface BaseView<T : BasePresenter> {
 
     fun setPresenter(presenter: T)
 

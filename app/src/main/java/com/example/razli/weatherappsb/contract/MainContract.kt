@@ -8,6 +8,7 @@ interface MainContract {
     interface View : BaseView<Presenter> {
 
         fun showFavouritePlace(place: String)
+
     }
 
     interface Presenter : BasePresenter {
@@ -15,4 +16,5 @@ interface MainContract {
         fun addFavouritePlace(place: String)
 
     }
+
 }

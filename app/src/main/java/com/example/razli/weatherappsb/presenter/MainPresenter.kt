@@ -1,10 +1,11 @@
 package com.example.razli.weatherappsb.presenter
 
+import android.content.Context
 import com.example.razli.weatherappsb.contract.MainContract
 
-class MainPresenter(var mView: MainContract.View) : MainContract.Presenter {
+class MainPresenter(private val mView: MainContract.View, val context: Context) : MainContract.Presenter {
 
-    var mFavouritePlaces= arrayListOf<String>()
+    private val mFavouritePlaces= arrayListOf<String>()
 
     init {
         mView.setPresenter(this)
@@ -16,6 +17,6 @@ class MainPresenter(var mView: MainContract.View) : MainContract.Presenter {
 
     override fun addFavouritePlace(place: String) {
         mFavouritePlaces.add(place)
-        mView.showFavouritePlace(mFavouritePlaces.get(0))
+        mView.showFavouritePlace(mFavouritePlaces.last())
     }
 }
