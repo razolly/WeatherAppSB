@@ -2,6 +2,7 @@ package com.example.razli.weatherappsb.presenter
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.Toast
 import com.example.razli.weatherappsb.contract.MainContract
 
@@ -10,7 +11,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     private val STRING_KEY = "favourite_place"
     private val PACKAGE_NAME = "com.example.razli.weatherappsb.presenter"
 
-    private val favouritePlaces= arrayListOf<String>()
+    private val favouritePlaces= HashSet<String>()
     private var sharedPreferences: SharedPreferences
 
     init {
@@ -21,9 +22,13 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         // Check if SharedPreferences exist
         if(sharedPreferences.contains(STRING_KEY)) {
-            favouritePlaces.add(sharedPreferences.getString(STRING_KEY, ""))
-            view.showFavouritePlace(favouritePlaces.last())
-            Toast.makeText(context, "The key exists!", Toast.LENGTH_SHORT).show()
+
+            // Replace Hashset values with the ones from SharedPreferences
+            favouritePlaces.clear()
+            favouritePlaces.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
+
+            // Display
+            view.showFavouritePlace(favouritePlaces)
         }
     }
 
@@ -32,12 +37,18 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     }
 
     override fun addFavouritePlace(place: String) {
+
+        Log.i("BeforeContents", favouritePlaces.toString())
+
         favouritePlaces.add(place)
 
-        // Update SharedPreferences
-        sharedPreferences.edit().putString(STRING_KEY, place).apply()
-        Toast.makeText(context, "Saved to SharedPreferences", Toast.LENGTH_SHORT).show()
+        // Display favourite places
+        Log.i("AfterContents", favouritePlaces.toString())
 
-        view.showFavouritePlace(favouritePlaces.last())
+        // Update SharedPreferences
+        sharedPreferences.edit().putStringSet(STRING_KEY, favouritePlaces).apply()
+        Toast.makeText(context, "Place added!", Toast.LENGTH_SHORT).show()
+
+        view.showFavouritePlace(favouritePlaces)
     }
 }

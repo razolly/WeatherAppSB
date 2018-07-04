@@ -3,7 +3,6 @@ package com.example.razli.weatherappsb.view
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.presenter.MainPresenter
@@ -28,8 +27,14 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         presenter.addFavouritePlace(editText.text.toString())
     }
 
-    override fun showFavouritePlace(place: String) {
-        textView.append(place + "\n")
+    override fun showFavouritePlace(listOfPlaces: HashSet<String>) {
+
+        // Clear text
+        textView.text = ""
+
+        for(place in listOfPlaces) {
+            textView.append(place + "\n")
+        }
     }
 
     override fun setPresenter(presenter: MainContract.Presenter) {
