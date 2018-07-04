@@ -26,9 +26,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             // Replace Hashset values with the ones from SharedPreferences
             favouritePlaces.clear()
             favouritePlaces.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
-
-            // Display
-            view.showFavouritePlace(favouritePlaces)
         }
     }
 
@@ -43,8 +40,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         // Update SharedPreferences
         sharedPreferences.edit().putStringSet(STRING_KEY, favouritePlaces).apply()
         Toast.makeText(context, "Place added!", Toast.LENGTH_SHORT).show()
-
-        view.showFavouritePlace(favouritePlaces)
     }
 
     override fun getFavouritePlaces(): HashSet<String> {

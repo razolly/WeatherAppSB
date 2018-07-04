@@ -7,8 +7,6 @@ interface MainContract {
 
     interface View : BaseView<Presenter> {
 
-        fun showFavouritePlace(listOfPlaces: HashSet<String>)
-
     }
 
     interface Presenter : BasePresenter {
