@@ -25,9 +25,6 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
         button.setOnClickListener { addFavouritePlace() }
 
-        // Fetch JSON
-        fetchJson()
-
         // Set-up RecyclerView
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
         recyclerViewPlaces.adapter = MainAdapter(presenter.getFavouritePlaces())
@@ -37,17 +34,6 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
         // Get string from EditText and pass to presenter
         presenter.addFavouritePlace(editText.text.toString())
-    }
-
-    private fun fetchJson() {
-        println("Fetching Json!")
-
-        val url = "https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1"
-
-        val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.github.com")
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
     }
 
     override fun setPresenter(presenter: MainContract.Presenter) {
