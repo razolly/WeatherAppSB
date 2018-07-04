@@ -2,10 +2,12 @@ package com.example.razli.weatherappsb.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.presenter.MainPresenter
+import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainContract.View{
@@ -19,6 +21,10 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         presenter = MainPresenter(this, this)
 
         button.setOnClickListener { addFavouritePlace() }
+
+        // Set-up RecyclerView
+        recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
+        recyclerViewPlaces.adapter = MainAdapter()
     }
 
     private fun addFavouritePlace() {

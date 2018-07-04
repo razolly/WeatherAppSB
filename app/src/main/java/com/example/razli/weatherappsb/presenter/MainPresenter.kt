@@ -38,12 +38,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun addFavouritePlace(place: String) {
 
-        Log.i("BeforeContents", favouritePlaces.toString())
-
         favouritePlaces.add(place)
-
-        // Display favourite places
-        Log.i("AfterContents", favouritePlaces.toString())
 
         // Update SharedPreferences
         sharedPreferences.edit().putStringSet(STRING_KEY, favouritePlaces).apply()
