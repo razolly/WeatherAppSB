@@ -15,6 +15,8 @@ interface MainContract {
 
         fun addFavouritePlace(place: String)
 
+        fun getFavouritePlaces(): HashSet<String>
+
     }
 
 }

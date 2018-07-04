@@ -46,4 +46,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         view.showFavouritePlace(favouritePlaces)
     }
+
+    override fun getFavouritePlaces(): HashSet<String> {
+        return favouritePlaces
+    }
 }

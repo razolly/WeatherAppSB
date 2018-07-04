@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
         // Set-up RecyclerView
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
-        recyclerViewPlaces.adapter = MainAdapter()
+        recyclerViewPlaces.adapter = MainAdapter(presenter.getFavouritePlaces())
     }
 
     private fun addFavouritePlace() {
@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
     override fun showFavouritePlace(listOfPlaces: HashSet<String>) {
 
-        // Clear text
-        textView.text = ""
-
-        for(place in listOfPlaces) {
-            textView.append(place + "\n")
-        }
+//        // Clear text
+//        textView.text = ""
+//
+//        for(place in listOfPlaces) {
+//            textView.append(place + "\n")
+//        }
     }
 
     override fun setPresenter(presenter: MainContract.Presenter) {
