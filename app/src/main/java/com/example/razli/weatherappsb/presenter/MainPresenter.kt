@@ -2,7 +2,6 @@ package com.example.razli.weatherappsb.presenter
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import android.widget.Toast
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
@@ -12,6 +11,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+
 
 class MainPresenter(private val view: MainContract.View, val context: Context) : MainContract.Presenter {
 
@@ -46,13 +48,19 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     private fun fetchJson() {
         println("Fetching Json!")
 
-//        val url = "https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1/"
-        val url = "https://samples.openweathermap.org/"
+        val baseUrl = "https://samples.openweathermap.org/"
+//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+
+        val client = OkHttpClient.Builder()
+                        .addInterceptor(HttpLoggingInterceptor()
+                        .setLevel(HttpLoggingInterceptor.Level.BASIC))
+                        .build()
 
         val retrofit = Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
+                        .baseUrl(baseUrl)
+                        .addConverterFactory(MoshiConverterFactory.create())
+                        .client(client)
+                        .build()
 
         val networkApi = retrofit.create(NetworkApi::class.java)
 
@@ -60,27 +68,17 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         call.enqueue(object: Callback<Place> {
             override fun onFailure(call: Call<Place>?, t: Throwable?) {
-                Toast.makeText(context, "Got a response!", Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                println(t?.message)
             }
 
             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
-                val place: Place? = response?.body()
-                Toast.makeText(context, "Got a response!", Toast.LENGTH_SHORT).show()
-            }
+//                if(response?.isSuccessful()) {
+                    val place: Place? = response?.body()
+                    Toast.makeText(context, "Got a response!", Toast.LENGTH_SHORT).show()
+                println(place)
 
-            //
-//            override fun onResponse(call: Call<List<Place>>?, response: Response<List<Place>>?) {
-//                val places: List<Place>? = response?.body()
-//
-//                Toast.makeText(context, "Got a response!", Toast.LENGTH_SHORT).show()
-//                println("onResponse")
-//            }
-//
-//            override fun onFailure(call: Call<List<Place>>?, t: Throwable?) {
-//                Toast.makeText(context, t?.message, Toast.LENGTH_SHORT).show()
-//                println(t?.message)
-//            }
+            }
         })
     }
 
