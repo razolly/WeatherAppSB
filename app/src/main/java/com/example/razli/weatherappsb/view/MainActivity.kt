@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import com.example.razli.weatherappsb.R
+import com.example.razli.weatherappsb.R.id.*
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
@@ -25,10 +26,6 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         presenter = MainPresenter(this, this)
 
         button.setOnClickListener { addFavouritePlace() }
-
-        // Set-up RecyclerView
-        recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
-        recyclerViewPlaces.adapter = MainAdapter(presenter.getFavouritePlaces())
     }
 
     private fun addFavouritePlace() {
@@ -44,12 +41,10 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         this.presenter = presenter
     }
 
-    // Create options menu in corner of toolbar
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun showFavouritePlaces(favouritePlaces: List<Place>) {
 
-        val menuInflater = menuInflater
-        menuInflater.inflate(R.menu.main_menu, menu)
-
-        return super.onCreateOptionsMenu(menu)
+        // Set-up RecyclerView
+        recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
+        recyclerViewPlaces.adapter = MainAdapter(favouritePlaces)
     }
 }

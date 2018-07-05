@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
+import com.example.razli.weatherappsb.model.Place
 
-class MainAdapter(val favouritePlaces: HashSet<String>) : RecyclerView.Adapter<CustomViewHolder>() {
+class MainAdapter(private val favouritePlaces: List<Place>) : RecyclerView.Adapter<CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val placeView = LayoutInflater.from(parent.context)
@@ -17,10 +18,13 @@ class MainAdapter(val favouritePlaces: HashSet<String>) : RecyclerView.Adapter<C
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.view.placeNameTextView.text = favouritePlaces.elementAt(position)
+
+        holder.view.placeNameTextView.text = favouritePlaces[position].name
+        holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + 0x00B0.toString() + "c"
     }
 
     override fun getItemCount(): Int {
+
         return favouritePlaces.size
     }
 }

@@ -8,13 +8,13 @@ interface MainContract {
 
     interface View : BaseView<Presenter> {
 
+        fun showFavouritePlaces(favouritePlaces: List<Place>)
+
     }
 
     interface Presenter : BasePresenter {
 
         fun addFavouritePlace(place: String)
-
-        fun getFavouritePlaces(): HashSet<String>
 
         fun fetchJson(cityName: String)
 
