@@ -1,21 +1,18 @@
 package com.example.razli.weatherappsb.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-data class Place(val name: String,
-                 @Json(name = "main") val weatherDetail: WeatherDetail) {
+@JsonClass(generateAdapter = true)
+data class Place(@Json(name = "main")
+                 val weatherDetail: WeatherDetail,
+                 val name: String) {
 }
 
-data class WeatherDetail(@Json(name = "temp") val temperature: Double,
+@JsonClass(generateAdapter = true)
+data class WeatherDetail(@Json(name = "temp")
+                         val temperature: Double,
                          val temp_min: Double,
                          val temp_max: Double) {
-
-//    "main": {
-//        "temp": 280.32,
-//        "pressure": 1012,
-//        "humidity": 81,
-//        "temp_min": 279.15,
-//        "temp_max": 281.15
-//    }
 
 }

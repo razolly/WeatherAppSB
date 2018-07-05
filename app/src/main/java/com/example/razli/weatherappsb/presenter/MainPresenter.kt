@@ -53,7 +53,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         val client = OkHttpClient.Builder()
                         .addInterceptor(HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BASIC))
+                        .setLevel(HttpLoggingInterceptor.Level.BODY))
                         .build()
 
         val retrofit = Retrofit.Builder()
@@ -75,7 +75,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
 //                if(response?.isSuccessful()) {
                     val place: Place? = response?.body()
-                    Toast.makeText(context, "Got a response!", Toast.LENGTH_SHORT).show()
                 println(place)
 
             }
