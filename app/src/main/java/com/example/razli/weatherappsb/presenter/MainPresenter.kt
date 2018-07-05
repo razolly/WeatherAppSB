@@ -48,8 +48,9 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     private fun fetchJson() {
         println("Fetching Json!")
 
-        val baseUrl = "https://samples.openweathermap.org/"
-//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+        // http://api.openweathermap.org/data/2.5/weather?q=singapore&units=metric&appid=1bab5a3cc4e7423879bea7b2dea70edc
+
+        val baseUrl = "http://api.openweathermap.org/"
 
         val client = OkHttpClient.Builder()
                         .addInterceptor(HttpLoggingInterceptor()
@@ -64,7 +65,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         val networkApi = retrofit.create(NetworkApi::class.java)
 
-        val call: Call<Place> = networkApi.getPlaceWeather()
+        // todo add the different cities here
+        val call: Call<Place> = networkApi.getPlaceWeather("manchester")
 
         call.enqueue(object: Callback<Place> {
             override fun onFailure(call: Call<Place>?, t: Throwable?) {

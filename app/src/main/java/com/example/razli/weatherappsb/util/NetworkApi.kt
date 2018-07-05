@@ -4,13 +4,17 @@ import com.example.razli.weatherappsb.model.Place
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface NetworkApi {
 
-    @GET("/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1")
+    //http://api.openweathermap.org/data/2.5/weather?q=singapore&units=metric&appid=1bab5a3cc4e7423879bea7b2dea70edc
+
+    @GET("/data/2.5/weather?q=singapore&units=metric&appid=1bab5a3cc4e7423879bea7b2dea70edc")
     fun getPlaceWeather(): Call<Place>
 
-    @GET("/data/2.5/weather?q={city}&appid=b1b15e88fa797225412429c1c50c122a1")
-    fun getPlaceWeather(@Path("city") city: String): Call<Place>
+    @GET("/data/2.5/weather?units=metric&appid=1bab5a3cc4e7423879bea7b2dea70edc")
+    fun getPlaceWeather(@Query("q") city: String): Call<Place>
+
 
 }
