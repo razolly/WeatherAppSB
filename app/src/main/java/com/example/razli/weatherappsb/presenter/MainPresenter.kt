@@ -36,8 +36,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             favouritePlaces.clear()
             favouritePlaces.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
 
-            // Fetch JSON
-            fetchJson()
+            // todo delete this
+//            sharedPreferences.edit().clear().commit()
         }
     }
 
@@ -45,10 +45,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     }
 
-    private fun fetchJson() {
-        println("Fetching Json!")
-
-        // http://api.openweathermap.org/data/2.5/weather?q=singapore&units=metric&appid=1bab5a3cc4e7423879bea7b2dea70edc
+    override fun fetchJson(cityName: String){
 
         val baseUrl = "http://api.openweathermap.org/"
 
@@ -65,8 +62,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         val networkApi = retrofit.create(NetworkApi::class.java)
 
-        // todo add the different cities here
-        val call: Call<Place> = networkApi.getPlaceWeather("manchester")
+        val call: Call<Place> = networkApi.getPlaceWeather(cityName)
 
         call.enqueue(object: Callback<Place> {
             override fun onFailure(call: Call<Place>?, t: Throwable?) {
@@ -75,10 +71,15 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             }
 
             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
-//                if(response?.isSuccessful()) {
-                    val place: Place? = response?.body()
-                println(place)
 
+                    val place: Place? = response?.body()
+
+                println(place.toString())
+
+                // pass info to recyclerview to update viewholder?
+                // but wont be able to save in sharedpreferences
+                // change data type to Place and use Serializer?
+                //view.updateTemperature(place.weatherDetail.temperature)
             }
         })
     }

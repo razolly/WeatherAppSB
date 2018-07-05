@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.contract.MainContract
+import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,8 +33,11 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
     private fun addFavouritePlace() {
 
-        // Get string from EditText and pass to presenter
-        presenter.addFavouritePlace(editText.text.toString())
+        val aPlace = editText.text.toString()
+
+        // Add to HashSet in presenter
+        presenter.addFavouritePlace(aPlace)
+
     }
 
     override fun setPresenter(presenter: MainContract.Presenter) {
