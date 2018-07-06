@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         presenter = MainPresenter(this, this)
 
         button.setOnClickListener { addFavouritePlace() }
+
+        recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
     }
 
     private fun addFavouritePlace() {
@@ -45,7 +47,6 @@ class MainActivity : AppCompatActivity(), MainContract.View{
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
 
         // Set-up RecyclerView
-        recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
         recyclerViewPlaces.adapter = MainAdapter(favouritePlaces)
     }
 }
