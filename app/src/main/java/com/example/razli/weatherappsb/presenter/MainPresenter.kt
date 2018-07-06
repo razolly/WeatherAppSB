@@ -48,7 +48,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             }
 
             // Display RecyclerView with updated info
-            view.showFavouritePlaces(favouritePlaces)
+//            view.showFavouritePlaces(favouritePlaces)
 
             // Uncomment this line to delete everything in SharedPreferences
             // sharedPreferences.edit().clear().commit()
@@ -94,6 +94,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     println(place.toString())
 
                     favouritePlaces.add(place)
+
+                    view.showFavouritePlaces(favouritePlaces)
                 }
             }
         })

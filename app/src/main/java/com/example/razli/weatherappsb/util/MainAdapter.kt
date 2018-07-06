@@ -21,6 +21,11 @@ class MainAdapter(private val favouritePlaces: List<Place>) : RecyclerView.Adapt
 
         holder.view.placeNameTextView.text = favouritePlaces[position].name
         holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
+
+        val weatherIconUrl = "http://openweathermap.org/img/w/10d.png"
+
+        //holder.view.image
+
     }
 
     override fun getItemCount(): Int {
