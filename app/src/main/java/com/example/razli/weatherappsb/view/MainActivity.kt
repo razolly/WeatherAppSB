@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         button.setOnClickListener { addFavouritePlace() }
 
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
+
+        // Refresh
+        swipe_container.setOnRefreshListener { presenter.updateListOfPlaces() }
     }
 
     private fun addFavouritePlace() {

@@ -46,9 +46,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
 
             // Populate List<Place> by referring to place names in HashSet<String>
-            for(index in 0 until favPlaceStrings.size) {
-                fetchJson(favPlaceStrings.elementAt(index))
-            }
+            updateListOfPlaces()
 
             // Display RecyclerView with updated info
 //            view.showFavouritePlaces(favouritePlaces)
@@ -120,5 +118,14 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
 
         Toast.makeText(context, placeName + " added!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun updateListOfPlaces() {
+
+        favouritePlaces.clear()
+
+        for(index in 0 until favPlaceStrings.size) {
+            fetchJson(favPlaceStrings.elementAt(index))
+        }
     }
 }

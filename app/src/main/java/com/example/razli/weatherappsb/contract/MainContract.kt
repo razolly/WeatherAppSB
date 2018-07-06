@@ -18,6 +18,8 @@ interface MainContract {
 
         fun fetchJson(cityName: String)
 
+        fun updateListOfPlaces()
+
     }
 
 }
