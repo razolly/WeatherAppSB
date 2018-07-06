@@ -24,12 +24,11 @@ class MainAdapter(private val favouritePlaces: List<Place>, private val context:
         holder.view.placeNameTextView.text = favouritePlaces[position].name
         holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
 
+        val url = "http://openweathermap.org/img/w/" + favouritePlaces[position].weatherIcon.first().icon + ".png"
+
         Glide.with(context)
-                .load("http://openweathermap.org/img/w/10d.png")
+                .load(url)
                 .into(holder.view.imageView)
-
-        //holder.view.image
-
     }
 
     override fun getItemCount(): Int {
