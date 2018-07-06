@@ -1,14 +1,16 @@
 package com.example.razli.weatherappsb.util
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
 import com.example.razli.weatherappsb.model.Place
 
-class MainAdapter(private val favouritePlaces: List<Place>) : RecyclerView.Adapter<CustomViewHolder>() {
+class MainAdapter(private val favouritePlaces: List<Place>, private val context: Context) : RecyclerView.Adapter<CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val placeView = LayoutInflater.from(parent.context)
@@ -22,7 +24,9 @@ class MainAdapter(private val favouritePlaces: List<Place>) : RecyclerView.Adapt
         holder.view.placeNameTextView.text = favouritePlaces[position].name
         holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
 
-        val weatherIconUrl = "http://openweathermap.org/img/w/10d.png"
+        Glide.with(context)
+                .load("http://openweathermap.org/img/w/10d.png")
+                .into(holder.view.imageView)
 
         //holder.view.image
 

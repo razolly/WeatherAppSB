@@ -47,6 +47,6 @@ class MainActivity : AppCompatActivity(), MainContract.View{
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
 
         // Set-up RecyclerView
-        recyclerViewPlaces.adapter = MainAdapter(favouritePlaces)
+        recyclerViewPlaces.adapter = MainAdapter(favouritePlaces, this)
     }
 }
