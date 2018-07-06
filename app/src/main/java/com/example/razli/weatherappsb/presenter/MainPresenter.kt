@@ -21,11 +21,15 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     private val STRING_KEY = "favourite_place"
     private val PACKAGE_NAME = "com.example.razli.weatherappsb.presenter"
 
-    private val favouritePlaces= HashSet<Place>()
+    // todo change this to List. Will encounter problems
+    private var favouritePlaces: MutableList<Place> = mutableListOf()
+
 //    private var sharedPreferences: SharedPreferences
 
     init {
         view.setPresenter(this)
+
+        view.showFavouritePlaces(favouritePlaces)
 
 //        // Initialize SharedPreferences
         // todo use this line
@@ -81,8 +85,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     println(place.toString())
 
                     favouritePlaces.add(place)
-
-
+                    //favouritePlaces.add(place)
 
                     // pass info to recyclerview to update viewholder?
                     // but wont be able to save in sharedpreferences
