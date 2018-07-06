@@ -15,6 +15,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 
 class MainPresenter(private val view: MainContract.View, val context: Context) : MainContract.Presenter {
@@ -92,6 +95,11 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     val place: Place = response.body()!!
 
                     println(place.toString())
+
+                    // Date
+                    val current = LocalDateTime.now()
+                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                    val lastUpdated = current.format(formatter)
 
                     favouritePlaces.add(place)
 

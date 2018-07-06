@@ -29,6 +29,8 @@ class MainAdapter(private val favouritePlaces: List<Place>, private val context:
         Glide.with(context)
                 .load(url)
                 .into(holder.view.imageView)
+
+        // Last Updated: Jun 27, 2018, 5:00PM
     }
 
     override fun getItemCount(): Int {
