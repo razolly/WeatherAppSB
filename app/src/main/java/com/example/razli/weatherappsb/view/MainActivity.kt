@@ -13,9 +13,6 @@ import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class MainActivity : AppCompatActivity(), MainContract.View{
 
