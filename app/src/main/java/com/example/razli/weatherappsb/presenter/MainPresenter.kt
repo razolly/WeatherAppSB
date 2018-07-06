@@ -32,20 +32,23 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     init {
         view.setPresenter(this)
 
-        view.showFavouritePlaces(favouritePlaces)
+        if(favouritePlaces.size > 0)
+            view.showFavouritePlaces(favouritePlaces)
 
-        // Initialize SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
         // Check if SharedPreferences exist
         if(sharedPreferences.contains(STRING_KEY)) {
 
-            println(favPlaceStrings)
-
-            // Fill up HashSet with Strings from SharedPreferences
             favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
 
-            println(favPlaceStrings)
+            // Populate List<Place> by referring to place names in HashSet<String>
+            for(index in 0 until favPlaceStrings.size) {
+                fetchJson(favPlaceStrings.elementAt(index))
+            }
+
+            // Display RecyclerView with updated info
+            view.showFavouritePlaces(favouritePlaces)
 
             // Uncomment this line to delete everything in SharedPreferences
             // sharedPreferences.edit().clear().commit()
@@ -56,6 +59,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     }
 
+    // Argument is the name of a place. Details of place is fetched in Json and parsed
+    // This method then adds a Place object to a List
     override fun fetchJson(placeName: String) {
 
         val baseUrl = "http://api.openweathermap.org/"
@@ -89,9 +94,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     println(place.toString())
 
                     favouritePlaces.add(place)
-
-                    // pass info to recyclerview to update viewholder?
-                    //view.updateTemperature(place.weatherDetail.temperature)
                 }
             }
         })
@@ -99,14 +101,12 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun addFavouritePlace(placeName: String) {
 
-        // Get info for place
         fetchJson(placeName)
 
-        // Add to HashSet
         favPlaceStrings.add(placeName)
 
-        // Update SharedPreferences
         sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+
         Toast.makeText(context, placeName + " added!", Toast.LENGTH_SHORT).show()
     }
 }

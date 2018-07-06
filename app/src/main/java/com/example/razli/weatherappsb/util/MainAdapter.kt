@@ -20,7 +20,7 @@ class MainAdapter(private val favouritePlaces: List<Place>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
         holder.view.placeNameTextView.text = favouritePlaces[position].name
-        holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + 0x00B0.toString() + "c"
+        holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
     }
 
     override fun getItemCount(): Int {
