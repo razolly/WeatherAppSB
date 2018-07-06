@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
         val aPlace = editText.text.toString()
 
-        // Add to HashSet in presenter
+        // Add to HashSet in presenter. It will be saved in SharedPreferences
+        // A new Place object will be created and added to List in Presenter. Wont be saved when app is killed
         presenter.addFavouritePlace(aPlace)
 
     }

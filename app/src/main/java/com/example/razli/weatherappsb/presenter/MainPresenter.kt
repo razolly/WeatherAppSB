@@ -1,6 +1,7 @@
 package com.example.razli.weatherappsb.presenter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.widget.Toast
 import com.example.razli.weatherappsb.contract.MainContract
@@ -19,33 +20,36 @@ import okhttp3.logging.HttpLoggingInterceptor
 class MainPresenter(private val view: MainContract.View, val context: Context) : MainContract.Presenter {
 
     private val STRING_KEY = "favourite_place"
-    private val PACKAGE_NAME = "com.example.razli.weatherappsb.presenter"
 
-    // todo change this to List. Will encounter problems
+    // This is persistent data (saved in SharedPreferences)
+    // When app starts, these strings will be used to populate favouritePlaces: MutableList<Place>
+    private var favPlaceStrings: HashSet<String> = hashSetOf()
+
     private var favouritePlaces: MutableList<Place> = mutableListOf()
 
-//    private var sharedPreferences: SharedPreferences
+    private var sharedPreferences: SharedPreferences
 
     init {
         view.setPresenter(this)
 
         view.showFavouritePlaces(favouritePlaces)
 
-//        // Initialize SharedPreferences
-        // todo use this line
-//        PreferenceManager.getDefaultSharedPreferences(context)
-//        sharedPreferences = context.getSharedPreferences(PACKAGE_NAME, 0)
-//
-//        // Check if SharedPreferences exist
-//        if(sharedPreferences.contains(STRING_KEY)) {
-//
-//            // Replace Hashset values with the ones from SharedPreferences
-//            favouritePlaces.clear()
-//            favouritePlaces.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
-//
-//            // todo delete this
-////            sharedPreferences.edit().clear().commit()
-//        }
+        // Initialize SharedPreferences
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        // Check if SharedPreferences exist
+        if(sharedPreferences.contains(STRING_KEY)) {
+
+            println(favPlaceStrings)
+
+            // Fill up HashSet with Strings from SharedPreferences
+            favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
+
+            println(favPlaceStrings)
+
+            // Uncomment this line to delete everything in SharedPreferences
+            // sharedPreferences.edit().clear().commit()
+        }
     }
 
     override fun start() {
@@ -85,11 +89,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     println(place.toString())
 
                     favouritePlaces.add(place)
-                    //favouritePlaces.add(place)
 
                     // pass info to recyclerview to update viewholder?
-                    // but wont be able to save in sharedpreferences
-                    // change data type to Place and use Serializer?
                     //view.updateTemperature(place.weatherDetail.temperature)
                 }
             }
@@ -98,14 +99,14 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun addFavouritePlace(placeName: String) {
 
-        // Return a Place Object
-        val place = fetchJson(placeName)
+        // Get info for place
+        fetchJson(placeName)
 
         // Add to HashSet
-//        favouritePlaces.add(place)
+        favPlaceStrings.add(placeName)
 
         // Update SharedPreferences
-//        sharedPreferences.edit().putStringSet(STRING_KEY, favouritePlaces).apply()
-//        Toast.makeText(context, "Place added!", Toast.LENGTH_SHORT).show()
+        sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+        Toast.makeText(context, placeName + " added!", Toast.LENGTH_SHORT).show()
     }
 }
