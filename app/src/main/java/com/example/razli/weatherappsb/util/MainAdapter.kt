@@ -23,14 +23,11 @@ class MainAdapter(private val favouritePlaces: List<Place>, private val context:
 
         holder.view.placeNameTextView.text = favouritePlaces[position].name
         holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
+        holder.view.lastUpdatedTextView.text = "Last Updated: " + favouritePlaces[position].lastUpdated
 
         val url = "http://openweathermap.org/img/w/" + favouritePlaces[position].weatherIcon.first().icon + ".png"
 
-        Glide.with(context)
-                .load(url)
-                .into(holder.view.imageView)
-
-        // Last Updated: Jun 27, 2018, 5:00PM
+        Glide.with(context).load(url).into(holder.view.imageView)
     }
 
     override fun getItemCount(): Int {

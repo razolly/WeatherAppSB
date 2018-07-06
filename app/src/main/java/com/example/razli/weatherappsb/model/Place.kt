@@ -8,7 +8,8 @@ data class Place(@Json(name = "main")
                  val weatherDetail: WeatherDetail,
                  @Json(name = "weather")
                  val weatherIcon: List<WeatherIcon>,
-                 val name: String) {
+                 val name: String,
+                 var lastUpdated: String = "") {
 }
 
 @JsonClass(generateAdapter = true)

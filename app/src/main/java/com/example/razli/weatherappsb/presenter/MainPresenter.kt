@@ -92,14 +92,16 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
 
                 if(response != null && response.isSuccessful && response.body() != null) {
+
                     val place: Place = response.body()!!
 
-                    println(place.toString())
-
-                    // Date
-                    val current = LocalDateTime.now()
+                    // Set the date of "last updated"
+                    val currentTime = LocalDateTime.now()
                     val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                    val lastUpdated = current.format(formatter)
+                    val lastUpdated = currentTime.format(formatter)
+                    place.lastUpdated = lastUpdated
+
+                    println(place.toString())
 
                     favouritePlaces.add(place)
 
