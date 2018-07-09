@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Temperature: 20 deg celcius"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/placeNameTextView"
         app:layout_constraintTop_toBottomOf="@+id/placeNameTextView" />
 

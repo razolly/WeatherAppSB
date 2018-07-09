@@ -16,8 +16,6 @@ interface MainContract {
 
         fun addFavouritePlace(place: String)
 
-        fun fetchJson(cityName: String)
-
         fun updateListOfPlaces()
 
     }

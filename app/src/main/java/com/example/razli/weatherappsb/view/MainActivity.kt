@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Menu
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.R.id.*
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         setContentView(R.layout.activity_main)
 
         presenter = MainPresenter(this, this)
+        setPresenter(presenter)
 
         button.setOnClickListener { addFavouritePlace() }
         handler = Handler()
@@ -38,6 +41,11 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         refreshEveryOneHour()
 
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.start()
     }
 
     private fun refreshEveryOneHour() {
@@ -59,8 +67,6 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
         val aPlace = editText.text.toString()
 
-        // Add to HashSet in presenter. It will be saved in SharedPreferences
-        // A new Place object will be created and added to List in Presenter. Wont be saved when app is killed
         presenter.addFavouritePlace(aPlace)
 
     }
