@@ -2,39 +2,35 @@ package com.example.razli.weatherappsb.presenter
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Handler
 import android.preference.PreferenceManager
 import android.widget.Toast
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
-import com.example.razli.weatherappsb.util.NetworkApi
 import com.example.razli.weatherappsb.util.Repository
-import com.example.razli.weatherappsb.view.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import java.util.*
 
 
 class MainPresenter(private val view: MainContract.View, val context: Context) : MainContract.Presenter {
 
     private val STRING_KEY = "favourite_place"
 
-    private var favPlaceStrings: HashSet<String> = hashSetOf()
-    private var sharedPreferences: SharedPreferences
+    private lateinit var runnable: Runnable
+    private var handler: Handler
 
-    val repository = Repository.instance
+    private var favPlaceStrings: HashSet<String> = hashSetOf()
+    private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+    private val repository = Repository.instance
 
     init {
-        //view.showFavouritePlaces(favouritePlaces)
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        //sharedPreferences.edit().clear().commit()
 
+        handler = Handler()
     }
 
     override fun start() {
@@ -44,29 +40,78 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
             favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
 
-            updateListOfPlaces()
+
+            val size = favPlaceStrings.size
+            val places = mutableListOf<Place>()
+
+            for (index in 0 until size) {
+                val favoritePlace = favPlaceStrings.elementAt(index)
+
+                repository.getWeather(favoritePlace,
+                        object : Callback<Place> {
+
+                            override fun onFailure(call: Call<Place>?, t: Throwable?) {
+                                //TODO("Show an Error Toast")
+                            }
+
+                            override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
+                                if (response != null && response.isSuccessful && response.body() != null) {
+                                    places.add(response.body() as Place)
+                                    if (places.size == size) {
+                                        view.showFavouritePlaces(places)
+                                    }
+                                } else {
+                                    onFailure(null, null)
+                                }
+                            }
+                        })
+            }
         }
+
+        refreshEveryOneHour()
     }
 
     override fun addFavouritePlace(placeName: String) {
-
         favPlaceStrings.add(placeName)
 
         sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
 
-        Toast.makeText(context, placeName + " added!", Toast.LENGTH_SHORT).show()
+        repository.getWeather(placeName,
+                object : Callback<Place> {
+
+                    override fun onFailure(call: Call<Place>?, t: Throwable?) {
+                        TODO("Show an Error Toast")
+                    }
+
+                    override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
+                        if (response != null && response.isSuccessful && response.body() != null) {
+                            view.showFavouritePlace(response.body() as Place)
+                        } else {
+                            onFailure(null, null)
+                        }
+                    }
+                })
+
+        Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
     }
 
-    override fun updateListOfPlaces() {
+    private fun refreshEveryOneHour() {
+        Timer().scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                refreshPlaceList()
+            }
+        }, 0, 3600000)
+    }
 
-        var places = mutableListOf<Place>()
+    fun refreshPlaceList() {
 
-        for (index in 0 until favPlaceStrings.size) {
-            //fetchJson(favPlaceStrings.elementAt(index))
-            places.add(repository.fetchWeatherData(favPlaceStrings.elementAt(index)))
+        runnable = Runnable {
+            start()
+
+            view.stopRefreshing()
         }
 
-        view.showFavouritePlaces(places)
+        handler.postDelayed(runnable, 2000)
     }
 
     // Argument is the name of a place. Details of place is fetched in Json and parsed

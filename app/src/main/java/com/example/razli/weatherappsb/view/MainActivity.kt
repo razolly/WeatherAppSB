@@ -1,28 +1,19 @@
 package com.example.razli.weatherappsb.view
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.Menu
 import com.example.razli.weatherappsb.R
-import com.example.razli.weatherappsb.R.id.*
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.*
 
-class MainActivity : AppCompatActivity(), MainContract.View{
+class MainActivity : AppCompatActivity(), MainContract.View {
 
     private lateinit var presenter: MainContract.Presenter
-    private lateinit var runnable: Runnable
-    private lateinit var handler: Handler
+    private lateinit var adapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +23,10 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         setPresenter(presenter)
 
         button.setOnClickListener { addFavouritePlace() }
-        handler = Handler()
 
         // Swipe-down-to-Refresh callback
-        swipe_container.setOnRefreshListener { refreshPlaceList() }
-
-        // Refresh every 1 hour
-        refreshEveryOneHour()
+        // todo uncomment line below
+        //swipe_container.setOnRefreshListener { presenter.refreshPlaceList() }
 
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
     }
@@ -48,19 +36,8 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         presenter.start()
     }
 
-    private fun refreshEveryOneHour() {
-        Timer().scheduleAtFixedRate(object : TimerTask() {
-            override fun run() { refreshPlaceList() }
-        }, 0, 3600000)
-    }
-
-    private fun refreshPlaceList() {
-        runnable = Runnable {
-            presenter.updateListOfPlaces()
-            swipe_container.isRefreshing = false
-        }
-
-        handler.postDelayed(runnable, 2000)
+    override fun stopRefreshing() {
+        swipe_container.isRefreshing = false
     }
 
     private fun addFavouritePlace() {
@@ -76,8 +53,20 @@ class MainActivity : AppCompatActivity(), MainContract.View{
     }
 
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
+        adapter = MainAdapter(favouritePlaces.toMutableList(), this)
+        recyclerViewPlaces.adapter = adapter
+    }
 
-        // Set-up RecyclerView
-        recyclerViewPlaces.adapter = MainAdapter(favouritePlaces, this)
+    override fun showFavouritePlace(favouritePlace: Place) {
+        if (this::adapter.isInitialized) {
+            adapter.addFavouritePlace(favouritePlace)
+        } else {
+            adapter = MainAdapter(mutableListOf(favouritePlace), this)
+            recyclerViewPlaces.adapter = adapter
+        }
+    }
+
+    override fun showError(error: String) {
+
     }
 }

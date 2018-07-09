@@ -10,7 +10,12 @@ import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
 import com.example.razli.weatherappsb.model.Place
 
-class MainAdapter(private val favouritePlaces: List<Place>, private val context: Context) : RecyclerView.Adapter<CustomViewHolder>() {
+class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context) : RecyclerView.Adapter<CustomViewHolder>() {
+
+    fun addFavouritePlace(place: Place) {
+        favouritePlaces.add(place)
+        notifyItemInserted(favouritePlaces.size - 1)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val placeView = LayoutInflater.from(parent.context)

@@ -10,13 +10,17 @@ interface MainContract {
 
         fun showFavouritePlaces(favouritePlaces: List<Place>)
 
+        fun showFavouritePlace(favouritePlace: Place)
+
+        fun stopRefreshing()
+
+        fun showError(error: String)
+
     }
 
     interface Presenter : BasePresenter {
 
         fun addFavouritePlace(place: String)
-
-        fun updateListOfPlaces()
 
     }
 

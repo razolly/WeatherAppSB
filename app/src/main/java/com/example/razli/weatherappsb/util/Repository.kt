@@ -1,7 +1,5 @@
 package com.example.razli.weatherappsb.util
 
-import android.widget.Toast
-import com.bumptech.glide.Glide.init
 import com.example.razli.weatherappsb.model.Place
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +18,7 @@ class Repository private constructor() {
 
     val client = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BODY))
+                    .setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
     val retrofit = Retrofit.Builder()
@@ -32,12 +30,19 @@ class Repository private constructor() {
     val networkApi = retrofit.create(NetworkApi::class.java)
 
 
-    private object Holder { val INSTANCE = Repository() }
+    private object Holder {
+        val INSTANCE = Repository()
+    }
 
     companion object {
 
         val instance: Repository by lazy { Holder.INSTANCE }
 
+    }
+
+    fun getWeather(placeName: String, callback: Callback<Place>) {
+        val call = networkApi.getPlaceWeather(placeName)
+        call.enqueue(callback)
     }
 
     fun fetchWeatherData(placeName: String): Place {
@@ -47,6 +52,7 @@ class Repository private constructor() {
         val call: Call<Place> = networkApi.getPlaceWeather(placeName)
 
         call.enqueue(object : Callback<Place> {
+
             override fun onFailure(call: Call<Place>?, t: Throwable?) {
                 println(t?.message)
             }
@@ -55,14 +61,15 @@ class Repository private constructor() {
 
                 if (response != null && response.isSuccessful && response.body() != null) {
 
-//                    val place: Place = response.body()!!
-                    place = response.body()!!
+                    //val place: Place = response.body()!!
+                    place = response.body() //as Place
+                    println("The place is " + place)
 
                     // Set the date of "last updated"
                     val currentTime = LocalDateTime.now()
                     val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
                     val lastUpdated = currentTime.format(formatter)
-                    //place.lastUpdated = lastUpdated
+                    //place.lastUpdated = lastUpdated0
 
                     println(place.toString())
                 }
