@@ -21,7 +21,7 @@ class MainAdapter(private val favouritePlaces: List<Place>, private val context:
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
-        holder.view.placeNameTextView.text = favouritePlaces[position].name
+        holder.view.placeNameTextView.text = favouritePlaces[position].name + ", " + favouritePlaces[position].countryDetail.country
         holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
         holder.view.lastUpdatedTextView.text = "Last Updated: " + favouritePlaces[position].lastUpdated
 

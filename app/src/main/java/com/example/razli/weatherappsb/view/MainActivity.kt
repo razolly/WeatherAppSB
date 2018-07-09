@@ -14,6 +14,7 @@ import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.*
 
 class MainActivity : AppCompatActivity(), MainContract.View{
 
@@ -33,7 +34,16 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         // Swipe-down-to-Refresh callback
         swipe_container.setOnRefreshListener { refreshPlaceList() }
 
+        // Refresh every 1 hour
+        refreshEveryOneHour()
+
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun refreshEveryOneHour() {
+        Timer().scheduleAtFixedRate(object : TimerTask() {
+            override fun run() { refreshPlaceList() }
+        }, 0, 3600000)
     }
 
     private fun refreshPlaceList() {
