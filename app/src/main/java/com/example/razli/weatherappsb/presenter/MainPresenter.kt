@@ -11,6 +11,7 @@ import com.example.razli.weatherappsb.util.Repository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -49,7 +50,15 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
                             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
                                 if (response != null && response.isSuccessful && response.body() != null) {
-                                    places.add(response.body() as Place)
+
+                                    val placeInfo = response.body() as Place
+                                    val sdf = SimpleDateFormat("MMM dd, yyyy, hh:mm aaa")
+                                    val currentDate = sdf.format(Date())
+
+                                    placeInfo.lastUpdated = currentDate
+
+                                    places.add(placeInfo)
+
                                     if (places.size == size) {
                                         view.showFavouritePlaces(places)
                                     }
@@ -79,7 +88,15 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
                     override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
                         if (response != null && response.isSuccessful && response.body() != null) {
-                            view.showFavouritePlace(response.body() as Place)
+
+                            val placeInfo = response.body() as Place
+                            val sdf = SimpleDateFormat("MMM dd, yyyy, hh:mm aaa")
+                            val currentDate = sdf.format(Date())
+
+                            placeInfo.lastUpdated = currentDate
+
+                            view.showFavouritePlace(placeInfo)
+
                         } else {
                             onFailure(null, null)
                         }
@@ -101,7 +118,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         }, 0, 3600000)
     }
 
-    fun refreshPlaceList() {
+    override fun refreshPlaceList() {
 
         runnable = Runnable {
             start()

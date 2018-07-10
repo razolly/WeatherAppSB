@@ -26,6 +26,8 @@ interface MainContract {
 
         fun removePlace(place: String)
 
+        fun refreshPlaceList()
+
     }
 
 }

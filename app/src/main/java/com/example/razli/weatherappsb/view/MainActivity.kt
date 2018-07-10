@@ -10,11 +10,6 @@ import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.util.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -31,8 +26,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         button.setOnClickListener { addFavouritePlace() }
 
         // Swipe-down-to-Refresh callback
-        // todo uncomment line below
-        //swipe_container.setOnRefreshListener { presenter.refreshPlaceList() }
+        swipe_container.setOnRefreshListener { presenter.refreshPlaceList() }
 
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
     }
@@ -75,6 +69,4 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT)
     }
-
-
 }
