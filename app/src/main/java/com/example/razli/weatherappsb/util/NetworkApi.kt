@@ -13,5 +13,4 @@ interface NetworkApi {
     @GET("/data/2.5/weather?units=metric&appid=1bab5a3cc4e7423879bea7b2dea70edc")
     fun getPlaceWeather(@Query("q") city: String): Call<Place>
 
-
 }

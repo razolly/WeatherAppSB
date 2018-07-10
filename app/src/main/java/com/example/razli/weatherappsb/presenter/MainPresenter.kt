@@ -19,27 +19,20 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     private val STRING_KEY = "favourite_place"
 
     private lateinit var runnable: Runnable
-    private var handler: Handler
+    private var handler: Handler = Handler()
 
     private var favPlaceStrings: HashSet<String> = hashSetOf()
     private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val repository = Repository.instance
 
-    init {
+    override fun start() {
 
         //sharedPreferences.edit().clear().commit()
 
-        handler = Handler()
-    }
-
-    override fun start() {
-
-        // Check if SharedPreferences exist
         if (sharedPreferences.contains(STRING_KEY)) {
 
             favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
-
 
             val size = favPlaceStrings.size
             val places = mutableListOf<Place>()
@@ -51,7 +44,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                         object : Callback<Place> {
 
                             override fun onFailure(call: Call<Place>?, t: Throwable?) {
-                                //TODO("Show an Error Toast")
+                                view.showError("Error: Failed to get weather details")
                             }
 
                             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
@@ -68,10 +61,11 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
             }
         }
 
-        refreshEveryOneHour()
+        //refreshEveryOneHour()
     }
 
     override fun addFavouritePlace(placeName: String) {
+
         favPlaceStrings.add(placeName)
 
         sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
@@ -80,7 +74,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                 object : Callback<Place> {
 
                     override fun onFailure(call: Call<Place>?, t: Throwable?) {
-                        TODO("Show an Error Toast")
+                        view.showError("Error: Failed to get weather details")
                     }
 
                     override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
@@ -93,6 +87,10 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                 })
 
         Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun removePlace(place: String) {
+
     }
 
     private fun refreshEveryOneHour() {

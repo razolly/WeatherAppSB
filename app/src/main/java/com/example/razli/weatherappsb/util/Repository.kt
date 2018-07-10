@@ -8,9 +8,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.*
 
 class Repository private constructor() {
 
@@ -18,7 +20,7 @@ class Repository private constructor() {
 
     val client = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY))
+            .setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
     val retrofit = Retrofit.Builder()
@@ -45,38 +47,42 @@ class Repository private constructor() {
         call.enqueue(callback)
     }
 
-    fun fetchWeatherData(placeName: String): Place {
-
-        var place: Place? = null
-
-        val call: Call<Place> = networkApi.getPlaceWeather(placeName)
-
-        call.enqueue(object : Callback<Place> {
-
-            override fun onFailure(call: Call<Place>?, t: Throwable?) {
-                println(t?.message)
-            }
-
-            override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
-
-                if (response != null && response.isSuccessful && response.body() != null) {
-
-                    //val place: Place = response.body()!!
-                    place = response.body() //as Place
-                    println("The place is " + place)
-
-                    // Set the date of "last updated"
-                    val currentTime = LocalDateTime.now()
-                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                    val lastUpdated = currentTime.format(formatter)
-                    //place.lastUpdated = lastUpdated0
-
-                    println(place.toString())
-                }
-            }
-        })
-
-        return place!!
-    }
+//    fun fetchWeatherData(placeName: String): Place {
+//
+//        var place: Place? = null
+//
+//        val call: Call<Place> = networkApi.getPlaceWeather(placeName)
+//
+//        call.enqueue(object : Callback<Place> {
+//
+//            override fun onFailure(call: Call<Place>?, t: Throwable?) {
+//                println(t?.message)
+//            }
+//
+//            override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
+//
+//                if (response != null && response.isSuccessful && response.body() != null) {
+//
+//                    //val place: Place = response.body()!!
+//                    place = response.body() //as Place
+//                    println("The place is " + place)
+//
+//                    // Set the date of "last updated"
+//                    val currentTime = LocalDateTime.now()
+//                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+//                    val lastUpdated = currentTime.format(formatter)
+//                    //place.lastUpdated = lastUpdated0
+//
+//                    val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+//                    val currentDate = simpleDateFormat.format(Date())
+//                    println("Current date: " + currentDate)
+//
+//                    println(place.toString())
+//                }
+//            }
+//        })
+//
+//        return place!!
+//    }
 
 }

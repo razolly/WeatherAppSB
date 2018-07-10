@@ -16,11 +16,15 @@ interface MainContract {
 
         fun showError(error: String)
 
+
+
     }
 
     interface Presenter : BasePresenter {
 
         fun addFavouritePlace(place: String)
+
+        fun removePlace(place: String)
 
     }
 

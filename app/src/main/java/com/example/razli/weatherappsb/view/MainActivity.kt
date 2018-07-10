@@ -3,12 +3,18 @@ package com.example.razli.weatherappsb.view
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -67,6 +73,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showError(error: String) {
-
+        Toast.makeText(this, error, Toast.LENGTH_SHORT)
     }
+
+
 }
