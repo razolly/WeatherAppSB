@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
 
         // comment
+        // comment 2
     }
 
     override fun onStart() {
