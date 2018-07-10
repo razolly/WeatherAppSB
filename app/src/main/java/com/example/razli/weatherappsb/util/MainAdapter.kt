@@ -1,16 +1,19 @@
 package com.example.razli.weatherappsb.util
 
 import android.content.Context
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
 import com.example.razli.weatherappsb.model.Place
 
-class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context) : RecyclerView.Adapter<CustomViewHolder>() {
+class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
+                                                : RecyclerView.Adapter<CustomViewHolder>() {
 
     fun addFavouritePlace(place: Place) {
         favouritePlaces.add(place)
@@ -36,7 +39,26 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
 
         Glide.with(context).load(url).into(holder.view.imageView)
 
+        // Display AlertDialog
         holder.itemView.setOnClickListener {
+
+            val builder = AlertDialog.Builder(context)
+
+            builder.setTitle("Delete")
+
+            builder.setMessage("Would you like to delete this place?")
+
+            builder.setPositiveButton("YES") { dialog, which ->
+                Toast.makeText(context, "Yes selected", Toast.LENGTH_SHORT).show()
+            }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                Toast.makeText(context, "Nope", Toast.LENGTH_SHORT).show()
+            }
+
+            val dialog: AlertDialog = builder.create()
+
+            dialog.show()
 
         }
     }

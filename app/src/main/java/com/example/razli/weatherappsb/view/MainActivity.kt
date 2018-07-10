@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    override fun showAlertDialog() {
+    /*override fun showAlertDialog() {
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("Delete")
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val dialog: AlertDialog = builder.create()
 
         dialog.show()
-    }
+    }*/
 
     override fun showError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT)
