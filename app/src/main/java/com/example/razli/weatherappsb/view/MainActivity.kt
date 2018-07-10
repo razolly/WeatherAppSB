@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         swipe_container.setOnRefreshListener { presenter.refreshPlaceList() }
 
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
+
+        // comment
     }
 
     override fun onStart() {

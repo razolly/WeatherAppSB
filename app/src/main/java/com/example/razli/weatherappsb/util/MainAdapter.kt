@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
@@ -14,6 +15,12 @@ import com.example.razli.weatherappsb.model.Place
 
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
                                                 : RecyclerView.Adapter<CustomViewHolder>() {
+
+    private val listener: OnItemClickListener
+
+    public interface OnItemClickListener
+
+
 
     fun addFavouritePlace(place: Place) {
         favouritePlaces.add(place)
