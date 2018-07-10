@@ -9,8 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
 import com.example.razli.weatherappsb.model.Place
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context) : RecyclerView.Adapter<CustomViewHolder>() {
 
@@ -28,16 +26,19 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
+        holder.view.isLongClickable = true
+
         holder.view.placeNameTextView.text = favouritePlaces[position].name + ", " + favouritePlaces[position].countryDetail.country
         holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
         holder.view.lastUpdatedTextView.text = "Last Updated: " + favouritePlaces[position].lastUpdated
 
-//        val sdf = SimpleDateFormat("MMM dd, yyyy, hh:mm aaa")
-//        val currentDate = sdf.format(Date())
-
         val url = "http://openweathermap.org/img/w/" + favouritePlaces[position].weatherIcon.first().icon + ".png"
 
         Glide.with(context).load(url).into(holder.view.imageView)
+
+        holder.itemView.setOnClickListener {
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -46,6 +47,9 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     }
 }
 
-class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view)/*, View.OnClickListener*/{
 
+//    override fun onClick(v: View?) {
+//
+//    }
 }

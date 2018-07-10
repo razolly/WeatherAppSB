@@ -1,10 +1,15 @@
 package com.example.razli.weatherappsb.view
 
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.example.razli.weatherappsb.R
+import com.example.razli.weatherappsb.R.id.editText
+import com.example.razli.weatherappsb.R.id.swipe_container
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
@@ -45,7 +50,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val aPlace = editText.text.toString()
 
         presenter.addFavouritePlace(aPlace)
-
     }
 
     override fun setPresenter(presenter: MainContract.Presenter) {
@@ -64,6 +68,26 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             adapter = MainAdapter(mutableListOf(favouritePlace), this)
             recyclerViewPlaces.adapter = adapter
         }
+    }
+
+    override fun showAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Delete")
+
+        builder.setMessage("Would you like to delete this place?")
+
+        builder.setPositiveButton("YES") { dialog, which ->
+            Toast.makeText(applicationContext, "Yes selected", Toast.LENGTH_SHORT).show()
+        }
+
+        builder.setNegativeButton("No") { dialog, which ->
+            Toast.makeText(applicationContext, "Nope", Toast.LENGTH_SHORT).show()
+        }
+
+        val dialog: AlertDialog = builder.create()
+
+        dialog.show()
     }
 
     override fun showError(error: String) {

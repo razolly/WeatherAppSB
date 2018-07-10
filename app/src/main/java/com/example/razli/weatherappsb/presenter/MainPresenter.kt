@@ -29,7 +29,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun start() {
 
-        //sharedPreferences.edit().clear().commit()
+        //sharedPreferences.edit().clear().commit()     // deletes everything
 
         if (sharedPreferences.contains(STRING_KEY)) {
 

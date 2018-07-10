@@ -16,7 +16,7 @@ interface MainContract {
 
         fun showError(error: String)
 
-
+        fun showAlertDialog()
 
     }
 
