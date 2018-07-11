@@ -16,7 +16,6 @@ import com.example.razli.weatherappsb.model.Place
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
     : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
 
-
     private lateinit var listener: OnItemClickListener
 
     interface OnItemClickListener {
@@ -27,19 +26,16 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         this.listener = listener
     }
 
-    inner class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    inner class CustomViewHolder(val view: View)
+        : RecyclerView.ViewHolder(view), View.OnClickListener {
 
         init {
-            view.setOnClickListener {
-                View.OnClickListener {
-                    val position = adapterPosition
-                    listener.onItemClick(view, position)
-                }
-            }
+            view.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            println("onClick")
+            val position = adapterPosition
+            listener.onItemClick(view, position)
         }
     }
 
@@ -53,7 +49,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         val placeView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.place_list_item, parent, false)
 
-        return MainAdapter.CustomViewHolder(placeView)
+        return CustomViewHolder(placeView)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -69,26 +65,6 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         Glide.with(context).load(url).into(holder.view.imageView)
 
         // Display AlertDialog
-//        holder.itemView.setOnClickListener {
-//
-//            val builder = AlertDialog.Builder(context)
-//
-//            builder.setTitle("Delete")
-//
-//            builder.setMessage("Would you like to delete this place?")
-//
-//            builder.setPositiveButton("YES") { dialog, which ->
-//                Toast.makeText(context, "Yes selected", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            builder.setNegativeButton("No") { dialog, which ->
-//                Toast.makeText(context, "Nope", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            val dialog: AlertDialog = builder.create()
-//
-//            dialog.show()
-//        }
     }
 
     override fun getItemCount(): Int {
