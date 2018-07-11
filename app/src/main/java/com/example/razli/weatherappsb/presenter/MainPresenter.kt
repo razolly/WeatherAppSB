@@ -33,6 +33,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         if (sharedPreferences.contains(STRING_KEY)) {
 
+            displayHashSet()
+
             favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
 
             val size = favPlaceStrings.size
@@ -103,6 +105,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     }
                 })
 
+        displayHashSet()
+
         Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
     }
 
@@ -111,8 +115,9 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         val placeConcatenated = place.split(",")
 
         favPlaceStrings.remove(placeConcatenated[0])
+        displayHashSet()
 
-        // sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+        sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
 
         view.showFavouritePlacesAfterRemove(placeConcatenated[0])
     }
@@ -134,6 +139,10 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         }
 
         handler.postDelayed(runnable, 2000)
+    }
+
+    private fun displayHashSet() {
+        println(favPlaceStrings)
     }
 
     // Argument is the name of a place. Details of place is fetched in Json and parsed
