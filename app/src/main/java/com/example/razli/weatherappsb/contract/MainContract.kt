@@ -16,7 +16,9 @@ interface MainContract {
 
         fun showError(error: String)
 
-        fun showAlertDialog(placeClickedIndex: Int)
+        fun showAlertDialog(placeClicked: String)
+
+        fun showFavouritePlacesAfterRemove(placeName: String)
 
     }
 
@@ -24,7 +26,7 @@ interface MainContract {
 
         fun addFavouritePlace(place: String)
 
-        fun removePlace(placeIndex: Int)
+        fun removePlace(place: String)
 
         fun refreshPlaceList()
 

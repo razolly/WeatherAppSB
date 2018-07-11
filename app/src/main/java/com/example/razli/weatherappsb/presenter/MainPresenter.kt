@@ -106,9 +106,15 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
     }
 
-    override fun removePlace(placeIndex: Int) {
-        // Remove string from hashset. Need to remove everything after ','
-        favPlaceStrings.remove()
+    override fun removePlace(place: String) {
+        // Remove everything in string after ','
+        val placeConcatenated = place.split(",")
+
+        favPlaceStrings.remove(placeConcatenated[0])
+
+        // sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+
+        view.showFavouritePlacesAfterRemove(placeConcatenated[0])
     }
 
     private fun refreshEveryOneHour() {

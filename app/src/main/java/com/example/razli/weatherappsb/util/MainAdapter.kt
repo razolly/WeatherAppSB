@@ -39,14 +39,20 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         }
     }
 
-
     fun addFavouritePlace(place: Place) {
         favouritePlaces.add(place)
         notifyItemInserted(favouritePlaces.size - 1)
     }
 
-    fun removeFavouritePlace(placeIndex: Int) {
-        favouritePlaces.removeAt(placeIndex)
+    fun removeFavouritePlace(place: String) {
+
+        // Loop through List. If name is the same, remove
+        for(index in 0 until favouritePlaces.size) {
+            if (favouritePlaces[index].name == place) {
+                favouritePlaces.removeAt(index - 1)
+            }
+        }
+
         notifyDataSetChanged()
     }
 

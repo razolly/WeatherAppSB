@@ -59,32 +59,43 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
+
         adapter = MainAdapter(favouritePlaces.toMutableList(), this)
+
         adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
             override fun onItemClick(itemView: View, position: Int) {
-                // returns position of item to delete
-                showAlertDialog(position)
+                // todo
+                val placeName = itemView.placeNameTextView.text.toString()
+                showAlertDialog(placeName)
             }
         })
         recyclerViewPlaces.adapter = adapter
     }
 
+    override fun showFavouritePlacesAfterRemove(placeName: String) {
+
+        adapter.removeFavouritePlace(placeName)
+    }
+
     override fun showFavouritePlace(favouritePlace: Place) {
+
         if (this::adapter.isInitialized) {
             adapter.addFavouritePlace(favouritePlace)
         } else {
             adapter = MainAdapter(mutableListOf(favouritePlace), this)
+
             adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View, position: Int) {
-                    // returns position of item to delete
-                    showAlertDialog(position)
+                    // todo
+                    val placeName = itemView.placeNameTextView.text.toString()
+                    showAlertDialog(placeName)
                 }
             })
             recyclerViewPlaces.adapter = adapter
         }
     }
 
-    override fun showAlertDialog(placeClickedIndex: Int) {
+    override fun showAlertDialog(placeClicked: String) {
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("Delete")
@@ -92,8 +103,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         builder.setMessage("Would you like to delete this place?")
 
         builder.setPositiveButton("YES") { dialog, which ->
-            // Presenter deletes object in the respective index
-            presenter.removePlace(placeClickedIndex)
+            // Presenter deletes object with same name
+            presenter.removePlace(placeClicked)
         }
 
         builder.setNegativeButton("No") { dialog, which ->
