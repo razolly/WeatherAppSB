@@ -63,8 +63,6 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         val url = "http://openweathermap.org/img/w/" + favouritePlaces[position].weatherIcon.first().icon + ".png"
 
         Glide.with(context).load(url).into(holder.view.imageView)
-
-        // Display AlertDialog
     }
 
     override fun getItemCount(): Int {
