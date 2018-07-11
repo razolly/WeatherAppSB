@@ -106,8 +106,9 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
     }
 
-    override fun removePlace(place: String) {
-
+    override fun removePlace(placeIndex: Int) {
+        // Remove string from hashset. Need to remove everything after ','
+        favPlaceStrings.remove()
     }
 
     private fun refreshEveryOneHour() {

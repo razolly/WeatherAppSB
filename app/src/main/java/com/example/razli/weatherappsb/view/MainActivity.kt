@@ -16,6 +16,7 @@ import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.place_list_item.view.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -35,9 +36,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         swipe_container.setOnRefreshListener { presenter.refreshPlaceList() }
 
         recyclerViewPlaces.layoutManager = LinearLayoutManager(this)
-
-        // comment
-        // comment 2
     }
 
     override fun onStart() {
@@ -62,10 +60,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
         adapter = MainAdapter(favouritePlaces.toMutableList(), this)
-
-        adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
+        adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
             override fun onItemClick(itemView: View, position: Int) {
-                showAlertDialog()
+                // returns position of item to delete
+                showAlertDialog(position)
             }
         })
         recyclerViewPlaces.adapter = adapter
@@ -76,17 +74,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             adapter.addFavouritePlace(favouritePlace)
         } else {
             adapter = MainAdapter(mutableListOf(favouritePlace), this)
-
-            adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
+            adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View, position: Int) {
-                    showAlertDialog()
+                    // returns position of item to delete
+                    showAlertDialog(position)
                 }
             })
             recyclerViewPlaces.adapter = adapter
         }
     }
 
-    override fun showAlertDialog() {
+    override fun showAlertDialog(placeClickedIndex: Int) {
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("Delete")
@@ -94,11 +92,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         builder.setMessage("Would you like to delete this place?")
 
         builder.setPositiveButton("YES") { dialog, which ->
-            Toast.makeText(applicationContext, "Yes selected", Toast.LENGTH_SHORT).show()
+            // Presenter deletes object in the respective index
+            presenter.removePlace(placeClickedIndex)
         }
 
         builder.setNegativeButton("No") { dialog, which ->
-            Toast.makeText(applicationContext, "Nope", Toast.LENGTH_SHORT).show()
+            // Do nothing
         }
 
         val dialog: AlertDialog = builder.create()

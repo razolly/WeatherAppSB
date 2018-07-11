@@ -45,6 +45,11 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         notifyItemInserted(favouritePlaces.size - 1)
     }
 
+    fun removeFavouritePlace(placeIndex: Int) {
+        favouritePlaces.removeAt(placeIndex)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.CustomViewHolder {
         val placeView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.place_list_item, parent, false)
