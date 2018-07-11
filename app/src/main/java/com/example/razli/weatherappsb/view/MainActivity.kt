@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.Toast
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.R.id.editText
@@ -61,6 +62,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
         adapter = MainAdapter(favouritePlaces.toMutableList(), this)
+
+        adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
+            override fun onItemClick(itemView: View, position: Int) {
+                showAlertDialog()
+            }
+        })
         recyclerViewPlaces.adapter = adapter
     }
 
@@ -69,6 +76,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             adapter.addFavouritePlace(favouritePlace)
         } else {
             adapter = MainAdapter(mutableListOf(favouritePlace), this)
+
+            adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
+                override fun onItemClick(itemView: View, position: Int) {
+                    showAlertDialog()
+                }
+            })
             recyclerViewPlaces.adapter = adapter
         }
     }

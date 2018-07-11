@@ -14,18 +14,46 @@ import kotlinx.android.synthetic.main.place_list_item.view.*
 import com.example.razli.weatherappsb.model.Place
 
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
-                                                : RecyclerView.Adapter<CustomViewHolder>() {
+    : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
+
+
+    private lateinit var listener: OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClick(itemView: View, position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
+    inner class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        init {
+            view.setOnClickListener {
+                View.OnClickListener {
+                    val position = adapterPosition
+                    listener.onItemClick(view, position)
+                }
+            }
+        }
+
+        override fun onClick(v: View?) {
+            println("onClick")
+        }
+    }
+
 
     fun addFavouritePlace(place: Place) {
         favouritePlaces.add(place)
         notifyItemInserted(favouritePlaces.size - 1)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.CustomViewHolder {
         val placeView = LayoutInflater.from(parent.context)
-                             .inflate(R.layout.place_list_item, parent, false)
+                .inflate(R.layout.place_list_item, parent, false)
 
-        return CustomViewHolder(placeView)
+        return MainAdapter.CustomViewHolder(placeView)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -41,38 +69,30 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         Glide.with(context).load(url).into(holder.view.imageView)
 
         // Display AlertDialog
-        holder.itemView.setOnClickListener {
-
-            val builder = AlertDialog.Builder(context)
-
-            builder.setTitle("Delete")
-
-            builder.setMessage("Would you like to delete this place?")
-
-            builder.setPositiveButton("YES") { dialog, which ->
-                Toast.makeText(context, "Yes selected", Toast.LENGTH_SHORT).show()
-            }
-
-            builder.setNegativeButton("No") { dialog, which ->
-                Toast.makeText(context, "Nope", Toast.LENGTH_SHORT).show()
-            }
-
-            val dialog: AlertDialog = builder.create()
-
-            dialog.show()
-
-        }
+//        holder.itemView.setOnClickListener {
+//
+//            val builder = AlertDialog.Builder(context)
+//
+//            builder.setTitle("Delete")
+//
+//            builder.setMessage("Would you like to delete this place?")
+//
+//            builder.setPositiveButton("YES") { dialog, which ->
+//                Toast.makeText(context, "Yes selected", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            builder.setNegativeButton("No") { dialog, which ->
+//                Toast.makeText(context, "Nope", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            val dialog: AlertDialog = builder.create()
+//
+//            dialog.show()
+//        }
     }
 
     override fun getItemCount(): Int {
 
         return favouritePlaces.size
     }
-}
-
-class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view)/*, View.OnClickListener*/{
-
-//    override fun onClick(v: View?) {
-//
-//    }
 }
