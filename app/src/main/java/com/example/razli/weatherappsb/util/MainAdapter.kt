@@ -47,9 +47,9 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     fun removeFavouritePlace(place: String) {
 
         // Loop through List. If name is the same, remove
-        for(index in 0 until favouritePlaces.size) {
+        for(index in 0 until favouritePlaces.size - 1) {
             if (favouritePlaces[index].name == place) {
-                favouritePlaces.removeAt(index - 1)
+                favouritePlaces.removeAt(index)
             }
         }
 
