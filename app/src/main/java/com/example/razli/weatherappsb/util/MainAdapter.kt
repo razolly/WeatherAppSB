@@ -43,31 +43,34 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         }
     }
 
+    // Might not be necessary because unlike tutorial, both are textviews, not a mix of imageview and textview
     // Alternate Version (Dark Grey Background)
-    inner class CustomViewHolderDark(val view: View)
-        : RecyclerView.ViewHolder(view), View.OnClickListener {
-
-        init {
-            view.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            listener.onItemClick(view, position)
-        }
-    }
+//    inner class CustomViewHolderDark(val view: View)
+//        : RecyclerView.ViewHolder(view), View.OnClickListener {
+//
+//        init {
+//            view.setOnClickListener(this)
+//        }
+//
+//        override fun onClick(v: View?) {
+//            val position = adapterPosition
+//            listener.onItemClick(view, position)
+//        }
+//    }
 
     override fun getItemViewType(position: Int): Int {
         //return super.getItemViewType(position)
 
-        if (favouritePlaces[position].weatherIcon.first().icon.contains('n')) {
-            println("night time!")
-            return LAYOUT_DARK
-        } else if (favouritePlaces[position].weatherIcon.first().icon.contains('d')) {
-            println("day time!")
-            return LAYOUT_LIGHT
-        } else {
-            return -1
+        return when {
+            favouritePlaces[position].weatherIcon.first().icon.contains('n') -> {
+                println("night time!")
+                LAYOUT_DARK
+            }
+            favouritePlaces[position].weatherIcon.first().icon.contains('d') -> {
+                println("day time!")
+                LAYOUT_LIGHT
+            }
+            else -> -1
         }
     }
 
@@ -77,10 +80,24 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.CustomViewHolder {
-        val placeView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.place_list_item, parent, false)
+//        val placeView = LayoutInflater.from(parent.context)
+//                .inflate(R.layout.place_list_item, parent, false)
 
-        return CustomViewHolder(placeView)
+        var placeView: View? = null
+
+        when (viewType) {
+            LAYOUT_DARK -> {
+                placeView = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.place_list_item_dark, parent, false)
+            }
+            // By default, use LAYOUT_LIGHT
+            else -> {
+                placeView = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.place_list_item, parent, false)
+            }
+        }
+
+        return CustomViewHolder(placeView!!)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
