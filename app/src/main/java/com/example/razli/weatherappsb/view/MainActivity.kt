@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
         adapter = MainAdapter(favouritePlaces.toMutableList(), this)
 
-        adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
+        adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
             override fun onItemClick(itemView: View, position: Int) {
                 val place = itemView.placeNameTextView.text.toString()
                 showAlertDialog(place)
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         } else {
             adapter = MainAdapter(mutableListOf(favouritePlace), this)
 
-            adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
+            adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View, position: Int) {
                     val place = itemView.placeNameTextView.text.toString()
                     showAlertDialog(place)
@@ -94,12 +94,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         builder.setMessage("Would you like to delete this place?")
 
         builder.setPositiveButton("YES") { dialog, which ->
-            Toast.makeText(applicationContext, "Yes selected", Toast.LENGTH_SHORT).show()
             presenter.removePlace(place)
         }
 
         builder.setNegativeButton("No") { dialog, which ->
-            Toast.makeText(applicationContext, "Nope", Toast.LENGTH_SHORT).show()
+            // Do nothing
         }
 
         val dialog: AlertDialog = builder.create()

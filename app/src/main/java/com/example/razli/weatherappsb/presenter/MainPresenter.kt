@@ -59,9 +59,12 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
                                     places.add(placeInfo)
 
-//                                    if (places.size == size) {
+                                    if (places.size == size) {
                                         view.showFavouritePlaces(places)
-//                                    }
+                                    }
+
+                                    printHashSet()
+
                                 } else {
                                     onFailure(null, null)
                                 }
@@ -100,6 +103,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
                             view.showFavouritePlace(placeInfo)
 
+                            printHashSet()
+
                         } else {
                             onFailure(null, null)
                         }
@@ -109,14 +114,14 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun removePlace(place: String) {
         val placeConcatenated = place.split(",")
-        println("Before: $favPlaceStrings")
+
         favPlaceStrings.remove(placeConcatenated[0])
-        println("Removing ${placeConcatenated[0]}")
-        println("After: $favPlaceStrings")
 
         sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
 
         refreshPlaceList()
+
+        printHashSet()
     }
 
     private fun refreshEveryOneHour() {
@@ -136,5 +141,9 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
         }
 
         handler.postDelayed(runnable, 2000)
+    }
+
+    private fun printHashSet() {
+        println(favPlaceStrings)
     }
 }

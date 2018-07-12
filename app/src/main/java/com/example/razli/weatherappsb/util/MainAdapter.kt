@@ -44,15 +44,12 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     }
 
     override fun getItemViewType(position: Int): Int {
-        //return super.getItemViewType(position)
 
         return when {
             favouritePlaces[position].weatherIcon.first().icon.contains('n') -> {
-                println("night time!")
                 LAYOUT_DARK
             }
             favouritePlaces[position].weatherIcon.first().icon.contains('d') -> {
-                println("day time!")
                 LAYOUT_LIGHT
             }
             else -> -1
