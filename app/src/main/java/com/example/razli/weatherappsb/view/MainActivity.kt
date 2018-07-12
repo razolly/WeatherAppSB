@@ -1,18 +1,14 @@
 package com.example.razli.weatherappsb.view
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import com.example.razli.weatherappsb.R
-import com.example.razli.weatherappsb.R.id.editText
-import com.example.razli.weatherappsb.R.id.swipe_container
+import com.example.razli.weatherappsb.weatherForecast.WeatherForecastActivity
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
@@ -73,6 +69,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
             override fun onItemLongClick(itemView: View, position: Int) {
                 println("Long press detected")
+                openWeatherForecastActivity()
             }
 
         })
@@ -95,6 +92,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
                 override fun onItemLongClick(itemView: View, position: Int) {
                     println("Long press detected")
+                    openWeatherForecastActivity()
                 }
 
             })
@@ -102,12 +100,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-//    private fun openWeatherDetailActivity(place: String) {
-//        val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-//            putExtra(EXTRA_MESSAGE, message)
-//        }
-//        startActivity(intent)
-//    }
+    private fun openWeatherForecastActivity() {
+        val intent = Intent(this, WeatherForecastActivity::class.java)
+        startActivity(intent)
+    }
 
     override fun showAlertDialog(place: String) {
         val builder = AlertDialog.Builder(this)
