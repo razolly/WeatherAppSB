@@ -46,43 +46,4 @@ class Repository private constructor() {
         val call = networkApi.getPlaceWeather(placeName)
         call.enqueue(callback)
     }
-
-//    fun fetchWeatherData(placeName: String): Place {
-//
-//        var place: Place? = null
-//
-//        val call: Call<Place> = networkApi.getPlaceWeather(placeName)
-//
-//        call.enqueue(object : Callback<Place> {
-//
-//            override fun onFailure(call: Call<Place>?, t: Throwable?) {
-//                println(t?.message)
-//            }
-//
-//            override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
-//
-//                if (response != null && response.isSuccessful && response.body() != null) {
-//
-//                    //val place: Place = response.body()!!
-//                    place = response.body() //as Place
-//                    println("The place is " + place)
-//
-//                    // Set the date of "last updated"
-//                    val currentTime = LocalDateTime.now()
-//                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-//                    val lastUpdated = currentTime.format(formatter)
-//                    //place.lastUpdated = lastUpdated0
-//
-//                    val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-//                    val currentDate = simpleDateFormat.format(Date())
-//                    println("Current date: " + currentDate)
-//
-//                    println(place.toString())
-//                }
-//            }
-//        })
-//
-//        return place!!
-//    }
-
 }

@@ -8,15 +8,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.example.razli.weatherappsb.R
-import com.example.razli.weatherappsb.weatherForecast.WeatherForecastActivity
 import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
+import com.example.razli.weatherappsb.weatherForecast.WeatherForecastActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.place_list_item.view.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+
+    val STRING_KEY = "PLACE_NAME"
 
     private lateinit var presenter: MainContract.Presenter
     private lateinit var adapter: MainAdapter
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
             override fun onItemLongClick(itemView: View, position: Int) {
                 println("Long press detected")
-                openWeatherForecastActivity()
+                openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
             }
 
         })
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
                 override fun onItemLongClick(itemView: View, position: Int) {
                     println("Long press detected")
-                    openWeatherForecastActivity()
+                    openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
                 }
 
             })
@@ -100,8 +102,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    private fun openWeatherForecastActivity() {
+    private fun openWeatherForecastActivity(place: String) {
         val intent = Intent(this, WeatherForecastActivity::class.java)
+        intent.putExtra(STRING_KEY, place)
         startActivity(intent)
     }
 
