@@ -3,6 +3,7 @@ package com.example.razli.weatherappsb.weatherForecast
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.razli.weatherappsb.R
+import com.example.razli.weatherappsb.util.Repository
 import kotlinx.android.synthetic.main.activity_weather_forecast.*
 
 class WeatherForecastActivity : AppCompatActivity() {
@@ -12,5 +13,7 @@ class WeatherForecastActivity : AppCompatActivity() {
         setContentView(R.layout.activity_weather_forecast)
 
         placeTextView.text = intent.getStringExtra("PLACE_NAME")
+
+        val repo = Repository.instance
     }
 }

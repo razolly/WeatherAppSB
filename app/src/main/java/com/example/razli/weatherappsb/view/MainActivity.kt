@@ -63,15 +63,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
             override fun onItemClick(itemView: View, position: Int) {
-                val place = itemView.placeNameTextView.text.toString()
-                showAlertDialog(place)
+                openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
+
             }
         })
 
         adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
             override fun onItemLongClick(itemView: View, position: Int) {
-                println("Long press detected")
-                openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
+                showAlertDialog(itemView.placeNameTextView.text.toString())
             }
 
         })
@@ -86,15 +85,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
             adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View, position: Int) {
-                    val place = itemView.placeNameTextView.text.toString()
-                    showAlertDialog(place)
+                    openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
                 }
             })
 
             adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
                 override fun onItemLongClick(itemView: View, position: Int) {
-                    println("Long press detected")
-                    openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
+                    showAlertDialog(itemView.placeNameTextView.text.toString())
                 }
 
             })
