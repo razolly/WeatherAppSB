@@ -29,7 +29,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun start() {
 
-        //sharedPreferences.edit().clear().commit()     // deletes everything
+        // sharedPreferences.edit().clear().commit()     // deletes everything
 
         if (sharedPreferences.contains(STRING_KEY)) {
 
@@ -108,7 +108,14 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun removePlace(place: String) {
         val placeConcatenated = place.split(",")
-//        placeConcatenated[0]
+        println("Before: $favPlaceStrings")
+        favPlaceStrings.remove(placeConcatenated[0])
+        println("Removing ${placeConcatenated[0]}")
+        println("After: $favPlaceStrings")
+
+        sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+
+        refreshPlaceList()
     }
 
     private fun refreshEveryOneHour() {
