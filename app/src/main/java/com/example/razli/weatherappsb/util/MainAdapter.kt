@@ -13,11 +13,11 @@ import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
 import com.example.razli.weatherappsb.model.Place
 
+private const val LAYOUT_LIGHT = 0
+private const val LAYOUT_DARK = 1
+
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
     : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
-
-    val LAYOUT_LIGHT = 0
-    val LAYOUT_DARK = 1
 
     private lateinit var listener: OnItemClickListener
 
@@ -29,7 +29,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         this.listener = listener
     }
 
-    /*--------------------*/
+    // region Razli
 
     private lateinit var longListener: OnItemLongClickListener
 
@@ -41,7 +41,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         this.longListener = listener
     }
 
-    /*--------------------*/
+    // endregion
 
     // Default Version (White Background)
     inner class CustomViewHolder(val view: View)
@@ -65,12 +65,12 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     }
 
     override fun getItemViewType(position: Int): Int {
-
-        return when {
-            favouritePlaces[position].weatherIcon.first().icon.contains('n') -> {
+        val icon = favouritePlaces[position].weatherIcon.first().icon.last()
+        return when (icon) {
+            'n' -> {
                 LAYOUT_DARK
             }
-            favouritePlaces[position].weatherIcon.first().icon.contains('d') -> {
+            'd' -> {
                 LAYOUT_LIGHT
             }
             else -> -1
