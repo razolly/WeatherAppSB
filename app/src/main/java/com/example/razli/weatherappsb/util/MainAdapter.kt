@@ -16,6 +16,9 @@ import com.example.razli.weatherappsb.model.Place
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
     : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
 
+    val LAYOUT_LIGHT = 0
+    val LAYOUT_DARK = 1
+
     private lateinit var listener: OnItemClickListener
 
     interface OnItemClickListener {
@@ -26,6 +29,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         this.listener = listener
     }
 
+    // Default Version (White Background)
     inner class CustomViewHolder(val view: View)
         : RecyclerView.ViewHolder(view), View.OnClickListener {
 
@@ -39,6 +43,33 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         }
     }
 
+    // Alternate Version (Dark Grey Background)
+    inner class CustomViewHolderDark(val view: View)
+        : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            listener.onItemClick(view, position)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        //return super.getItemViewType(position)
+
+        if (favouritePlaces[position].weatherIcon.first().icon.contains('n')) {
+            println("night time!")
+            return LAYOUT_DARK
+        } else if (favouritePlaces[position].weatherIcon.first().icon.contains('d')) {
+            println("day time!")
+            return LAYOUT_LIGHT
+        } else {
+            return -1
+        }
+    }
 
     fun addFavouritePlace(place: Place) {
         favouritePlaces.add(place)
