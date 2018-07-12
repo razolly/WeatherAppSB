@@ -16,6 +16,7 @@ import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.place_list_item.view.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -65,7 +66,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
             override fun onItemClick(itemView: View, position: Int) {
-                showAlertDialog()
+                val place = itemView.placeNameTextView.text.toString()
+                showAlertDialog(place)
             }
         })
         recyclerViewPlaces.adapter = adapter
@@ -79,14 +81,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
             adapter.setOnItemClickListener(object: MainAdapter.OnItemClickListener {
                 override fun onItemClick(itemView: View, position: Int) {
-                    showAlertDialog()
+                    val place = itemView.placeNameTextView.text.toString()
+                    showAlertDialog(place)
                 }
             })
             recyclerViewPlaces.adapter = adapter
         }
     }
 
-    override fun showAlertDialog() {
+    override fun showAlertDialog(place: String) {
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("Delete")
@@ -95,6 +98,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         builder.setPositiveButton("YES") { dialog, which ->
             Toast.makeText(applicationContext, "Yes selected", Toast.LENGTH_SHORT).show()
+            presenter.removePlace(place)
         }
 
         builder.setNegativeButton("No") { dialog, which ->

@@ -59,9 +59,9 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
                                     places.add(placeInfo)
 
-                                    if (places.size == size) {
+//                                    if (places.size == size) {
                                         view.showFavouritePlaces(places)
-                                    }
+//                                    }
                                 } else {
                                     onFailure(null, null)
                                 }
@@ -107,7 +107,8 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     }
 
     override fun removePlace(place: String) {
-
+        val placeConcatenated = place.split(",")
+//        placeConcatenated[0]
     }
 
     private fun refreshEveryOneHour() {
