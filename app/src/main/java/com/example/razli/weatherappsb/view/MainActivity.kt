@@ -1,7 +1,9 @@
 package com.example.razli.weatherappsb.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -99,6 +101,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             recyclerViewPlaces.adapter = adapter
         }
     }
+
+//    private fun openWeatherDetailActivity(place: String) {
+//        val intent = Intent(this, DisplayMessageActivity::class.java).apply {
+//            putExtra(EXTRA_MESSAGE, message)
+//        }
+//        startActivity(intent)
+//    }
 
     override fun showAlertDialog(place: String) {
         val builder = AlertDialog.Builder(this)
