@@ -75,19 +75,22 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
     override fun addFavouritePlace(placeName: String) {
 
-        favPlaceStrings.add(placeName)
-
-        sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
-
         repository.getWeather(placeName,
                 object : Callback<Place> {
 
                     override fun onFailure(call: Call<Place>?, t: Throwable?) {
-                        view.showError("Error: Failed to get weather details")
+                        view.showError("Failed to get weather details :(")
+                        Toast.makeText(context, "Failed to get weather details :(", Toast.LENGTH_SHORT).show()
+
                     }
 
                     override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
                         if (response != null && response.isSuccessful && response.body() != null) {
+
+                            // Saved to SharedPreferences & notify (via Toast)
+                            favPlaceStrings.add(placeName)
+                            sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+                            Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
 
                             val placeInfo = response.body() as Place
                             val sdf = SimpleDateFormat("MMM dd, yyyy, hh:mm aaa")
@@ -102,8 +105,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                         }
                     }
                 })
-
-        Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
     }
 
     override fun removePlace(place: String) {
@@ -136,53 +137,4 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         handler.postDelayed(runnable, 2000)
     }
-
-    // Argument is the name of a place. Details of place is fetched in Json and parsed
-    // This method then adds a Place object to a List
-//    fun fetchJson(placeName: String) {
-//
-//        val baseUrl = "http://api.openweathermap.org/"
-//
-//        val client = OkHttpClient.Builder()
-//                .addInterceptor(HttpLoggingInterceptor()
-//                        .setLevel(HttpLoggingInterceptor.Level.BODY))
-//                .build()
-//
-//        val retrofit = Retrofit.Builder()
-//                .baseUrl(baseUrl)
-//                .addConverterFactory(MoshiConverterFactory.create())
-//                .client(client)
-//                .build()
-//
-//        val networkApi = retrofit.create(NetworkApi::class.java)
-//
-//        val call: Call<Place> = networkApi.getPlaceWeather(placeName)
-//
-//        call.enqueue(object : Callback<Place> {
-//            override fun onFailure(call: Call<Place>?, t: Throwable?) {
-//                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-//                println(t?.message)
-//            }
-//
-//            override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
-//
-//                if (response != null && response.isSuccessful && response.body() != null) {
-//
-//                    val place: Place = response.body()!!
-//
-//                    // Set the date of "last updated"
-//                    val currentTime = LocalDateTime.now()
-//                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-//                    val lastUpdated = currentTime.format(formatter)
-//                    place.lastUpdated = lastUpdated
-//
-//                    println(place.toString())
-//
-//                    favouritePlaces.add(place)
-//
-//                    view.showFavouritePlaces(favouritePlaces)
-//                }
-//            }
-//        })
-//    }
 }

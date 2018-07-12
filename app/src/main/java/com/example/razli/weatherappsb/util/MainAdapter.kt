@@ -43,21 +43,6 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         }
     }
 
-    // Might not be necessary because unlike tutorial, both are textviews, not a mix of imageview and textview
-    // Alternate Version (Dark Grey Background)
-//    inner class CustomViewHolderDark(val view: View)
-//        : RecyclerView.ViewHolder(view), View.OnClickListener {
-//
-//        init {
-//            view.setOnClickListener(this)
-//        }
-//
-//        override fun onClick(v: View?) {
-//            val position = adapterPosition
-//            listener.onItemClick(view, position)
-//        }
-//    }
-
     override fun getItemViewType(position: Int): Int {
         //return super.getItemViewType(position)
 
@@ -80,8 +65,6 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.CustomViewHolder {
-//        val placeView = LayoutInflater.from(parent.context)
-//                .inflate(R.layout.place_list_item, parent, false)
 
         var placeView: View? = null
 
