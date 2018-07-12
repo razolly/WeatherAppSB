@@ -29,17 +29,38 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         this.listener = listener
     }
 
+    /*--------------------*/
+
+    private lateinit var longListener: OnItemLongClickListener
+
+    interface OnItemLongClickListener {
+        fun onItemLongClick(itemView: View, position: Int)
+    }
+
+    fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
+        this.longListener = listener
+    }
+
+    /*--------------------*/
+
     // Default Version (White Background)
     inner class CustomViewHolder(val view: View)
-        : RecyclerView.ViewHolder(view), View.OnClickListener {
+        : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
 
         init {
             view.setOnClickListener(this)
+            view.setOnLongClickListener(this)
         }
 
         override fun onClick(v: View?) {
             val position = adapterPosition
             listener.onItemClick(view, position)
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            val position = adapterPosition
+            longListener.onItemLongClick(view, position)
+            return true
         }
     }
 

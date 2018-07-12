@@ -67,6 +67,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 showAlertDialog(place)
             }
         })
+
+        adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
+            override fun onItemLongClick(itemView: View, position: Int) {
+                println("Long press detected")
+            }
+
+        })
         recyclerViewPlaces.adapter = adapter
     }
 
@@ -81,6 +88,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                     val place = itemView.placeNameTextView.text.toString()
                     showAlertDialog(place)
                 }
+            })
+
+            adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
+                override fun onItemLongClick(itemView: View, position: Int) {
+                    println("Long press detected")
+                }
+
             })
             recyclerViewPlaces.adapter = adapter
         }
