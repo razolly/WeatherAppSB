@@ -34,7 +34,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     private lateinit var longListener: OnItemLongClickListener
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(itemView: View, position: Int)
+        fun onItemLongClick(itemView: View, position: Int, identifier: String)
     }
 
     fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
@@ -59,7 +59,8 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
 
         override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
-            longListener.onItemLongClick(view, position)
+            longListener.onItemLongClick(view, position, favouritePlaces[position].placeIdentifier)
+            println("Identifier: " + favouritePlaces[position].placeIdentifier)
             return true
         }
     }

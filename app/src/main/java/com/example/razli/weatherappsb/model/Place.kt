@@ -15,6 +15,8 @@ data class Place(@Json(name = "main")
 
                  val name: String,
 
+                 var placeIdentifier: String = "",
+
                  var lastUpdated: String = "") {
 }
 

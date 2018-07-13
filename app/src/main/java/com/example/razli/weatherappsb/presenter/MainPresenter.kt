@@ -100,6 +100,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                             val currentDate = sdf.format(Date())
 
                             placeInfo.lastUpdated = currentDate
+                            placeInfo.placeIdentifier = placeName
 
                             view.showFavouritePlace(placeInfo)
 
