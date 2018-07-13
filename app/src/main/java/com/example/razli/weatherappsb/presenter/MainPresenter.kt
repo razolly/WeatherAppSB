@@ -14,7 +14,6 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class MainPresenter(private val view: MainContract.View, val context: Context) : MainContract.Presenter {
 
     private val STRING_KEY = "favourite_place"

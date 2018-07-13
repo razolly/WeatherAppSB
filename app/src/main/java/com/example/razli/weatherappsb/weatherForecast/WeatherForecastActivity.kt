@@ -12,8 +12,11 @@ class WeatherForecastActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_forecast)
 
-        placeTextView.text = intent.getStringExtra("PLACE_NAME")
+        //placeTextView.text = intent.getStringExtra("PLACE_NAME")
 
         val repo = Repository.instance
+
+        viewpager.adapter = WeatherForecastFragmentAdapter(supportFragmentManager, this)
+        sliding_tabs.setupWithViewPager(viewpager)
     }
 }

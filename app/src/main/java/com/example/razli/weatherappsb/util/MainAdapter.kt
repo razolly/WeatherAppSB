@@ -29,7 +29,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         this.listener = listener
     }
 
-    // region Razli
+    // region LongClick
 
     private lateinit var longListener: OnItemLongClickListener
 
@@ -60,7 +60,6 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
             longListener.onItemLongClick(view, position, favouritePlaces[position].placeIdentifier)
-            println("Identifier: " + favouritePlaces[position].placeIdentifier)
             return true
         }
     }
