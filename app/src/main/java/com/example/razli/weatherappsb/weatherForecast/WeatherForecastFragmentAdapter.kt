@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
 class WeatherForecastFragmentAdapter(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter(fm) {
-    internal val PAGE_COUNT = 3
-    private val tabTitles = arrayOf("Tab1", "Tab2", "Tab3")
+    private val PAGE_COUNT = 5
+    private val tabTitles = arrayOf("Day1", "Day2", "Day3", "Day4", "Day5")
 
     override fun getCount(): Int {
         return PAGE_COUNT

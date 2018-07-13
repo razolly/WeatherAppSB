@@ -1,6 +1,5 @@
 package com.example.razli.weatherappsb.weatherForecast
 
-import android.widget.TextView
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.LayoutInflater
@@ -19,8 +18,10 @@ class WeatherForecastFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_page, container, false)
-        val textView = view as TextView
-        textView.text = "Fragment #$mPage"
+
+        // todo fill up views with info. See the MainAdapter of the RecyclerView
+//        val textView = view as TextView
+//        textView.text = "Fragment #$mPage"
         return view
     }
 
@@ -31,7 +32,7 @@ class WeatherForecastFragment : Fragment() {
             val args = Bundle()
             args.putInt(ARG_PAGE, page)
             val fragment = WeatherForecastFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
