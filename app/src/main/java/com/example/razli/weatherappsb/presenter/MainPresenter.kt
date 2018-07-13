@@ -56,6 +56,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                                     val currentDate = sdf.format(Date())
 
                                     placeInfo.lastUpdated = currentDate
+                                    placeInfo.placeIdentifier = favoritePlace
 
                                     places.add(placeInfo)
 
@@ -114,9 +115,9 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     }
 
     override fun removePlace(place: String) {
-        val placeConcatenated = place.split(",")
+        //val placeConcatenated = place.split(",")
 
-        favPlaceStrings.remove(placeConcatenated[0])
+        favPlaceStrings.remove(place)
 
         sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
 

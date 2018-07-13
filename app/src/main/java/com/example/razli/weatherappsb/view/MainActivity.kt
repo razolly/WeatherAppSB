@@ -70,7 +70,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
             override fun onItemLongClick(itemView: View, position: Int, identifier: String) {
-                showAlertDialog(itemView.placeNameTextView.text.toString())
+//                showAlertDialog(itemView.placeNameTextView.text.toString())
+                showAlertDialog(identifier)
             }
 
         })
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
             adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
                 override fun onItemLongClick(itemView: View, position: Int, identifier: String) {
-                    showAlertDialog(itemView.placeNameTextView.text.toString())
+                    showAlertDialog(identifier)
                 }
 
             })
