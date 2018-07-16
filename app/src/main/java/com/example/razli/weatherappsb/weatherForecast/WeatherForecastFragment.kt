@@ -8,14 +8,19 @@ import android.view.View
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.Place
 
-class WeatherForecastFragment : Fragment() {
+class WeatherForecastFragment : Fragment(), WeatherForecastContract.View {
 
     private var mPage: Int = 0
 
+    private lateinit var wfPresenter: WeatherForecastContract.Presenter
     private lateinit var place: Place
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        wfPresenter = WeatherForecastPresenter(this)
+        setPresenter(wfPresenter)
+
         mPage = arguments!!.getInt(ARG_PAGE)
     }
 
@@ -38,5 +43,14 @@ class WeatherForecastFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        wfPresenter.start()
+    }
+
+    override fun setPresenter(presenter: WeatherForecastContract.Presenter) {
+        wfPresenter = presenter
     }
 }
