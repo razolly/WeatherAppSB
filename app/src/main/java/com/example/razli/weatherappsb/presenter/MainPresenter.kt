@@ -16,7 +16,7 @@ import java.util.*
 
 class MainPresenter(private val view: MainContract.View, val context: Context) : MainContract.Presenter {
 
-    private val STRING_KEY = "favourite_place"
+    private val STRING_KEY_SHAREDPREF = "favourite_place"
 
     private lateinit var runnable: Runnable
     private var handler: Handler = Handler()
@@ -30,9 +30,9 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         // sharedPreferences.edit().clear().commit()     // deletes everything
 
-        if (sharedPreferences.contains(STRING_KEY)) {
+        if (sharedPreferences.contains(STRING_KEY_SHAREDPREF)) {
 
-            favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
+            favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY_SHAREDPREF, hashSetOf("")))
 
             val size = favPlaceStrings.size
             val places = mutableListOf<Place>()
@@ -91,7 +91,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
                             // Saved to SharedPreferences & notify (via Toast)
                             favPlaceStrings.add(placeName)
-                            sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+                            sharedPreferences.edit().putStringSet(STRING_KEY_SHAREDPREF, favPlaceStrings).apply()
                             Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
 
                             val placeInfo = response.body() as Place
@@ -116,7 +116,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         favPlaceStrings.remove(place)
 
-        sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+        sharedPreferences.edit().putStringSet(STRING_KEY_SHAREDPREF, favPlaceStrings).apply()
 
         refreshPlaceList()
 

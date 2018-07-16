@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.place_list_item.view.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
-    val STRING_KEY = "PLACE_NAME"
+    val STRING_KEY_PLACE_NAME = "PLACE_NAME"
 
     private lateinit var presenter: MainContract.Presenter
     private lateinit var adapter: MainAdapter
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun openWeatherForecastActivity(place: String) {
         val intent = Intent(this, ForecastActivity::class.java)
-        intent.putExtra(STRING_KEY, place)
+        intent.putExtra(STRING_KEY_PLACE_NAME, place)
         startActivity(intent)
     }
 

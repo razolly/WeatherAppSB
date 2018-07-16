@@ -9,7 +9,7 @@ import com.example.razli.weatherappsb.R
 
 class ForecastFragment : Fragment(), ForecastContract.View {
 
-    private var mPage: Int = 0
+    private var pageNo: Int = 0
 
     private lateinit var wfPresenter: ForecastContract.Presenter
     //private lateinit var place: Place
@@ -17,7 +17,7 @@ class ForecastFragment : Fragment(), ForecastContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mPage = arguments!!.getInt(ARG_PAGE)
+        pageNo = arguments!!.getInt(ARG_PAGE)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,7 +28,7 @@ class ForecastFragment : Fragment(), ForecastContract.View {
 
         // todo fill up views with info. See the MainAdapter of the RecyclerView
 //        val textView = view as TextView
-//        textView.text = "Fragment #$mPage"
+//        textView.text = "Fragment #$pageNo"
         return view
     }
 
