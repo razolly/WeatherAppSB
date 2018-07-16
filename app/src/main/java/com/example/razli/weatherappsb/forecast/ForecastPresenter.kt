@@ -9,6 +9,8 @@ import retrofit2.Response
 class ForecastPresenter(private val view: ForecastContract.View)
     : ForecastContract.Presenter {
 
+    val places = mutableListOf<Place>()
+
     private lateinit var aPlace: Place
 
 //    init {
@@ -38,5 +40,20 @@ class ForecastPresenter(private val view: ForecastContract.View)
                         }
                     }
                 })
+
+//        repository.getWeatherForecast("london",
+//                object : Callback<List<Place>> {
+//                    override fun onFailure(call: Call<List<Place>>?, t: Throwable?) {
+//
+//                    }
+//
+//                    override fun onResponse(call: Call<List<Place>>?, response: Response<List<Place>>?) {
+//
+//                        if(response != null && response.isSuccessful && response.body() != null) {
+//                            places = response.body()
+//                        }
+//
+//                    }
+//                })
     }
 }

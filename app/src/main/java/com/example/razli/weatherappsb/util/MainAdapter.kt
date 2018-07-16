@@ -1,13 +1,11 @@
 package com.example.razli.weatherappsb.util
 
 import android.content.Context
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
@@ -19,27 +17,10 @@ private const val LAYOUT_DARK = 1
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
     : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
 
-    private lateinit var listener: OnItemClickListener
+    private lateinit var listener: MainAdapter.ItemListener
 
-    interface OnItemClickListener {
-        fun onItemClick(itemView: View, position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
+    fun setOnItemClickListener(listener: ItemListener) {
         this.listener = listener
-    }
-
-    // Vince, I tried to rearrange these, but kept on getting compile errors even after
-    // cleaning and rebuilding the project
-
-    private lateinit var longListener: OnItemLongClickListener
-
-    interface OnItemLongClickListener {
-        fun onItemLongClick(itemView: View, position: Int, identifier: String)
-    }
-
-    fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
-        this.longListener = listener
     }
 
     // Default Version (White Background)
@@ -58,7 +39,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
 
         override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
-            longListener.onItemLongClick(view, position, favouritePlaces[position].placeIdentifier)
+            listener.onItemLongClick(view, position, favouritePlaces[position].placeIdentifier)
             return true
         }
     }
@@ -116,5 +97,10 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     override fun getItemCount(): Int {
 
         return favouritePlaces.size
+    }
+
+    interface ItemListener {
+        fun onItemClick(itemView: View, position: Int)
+        fun onItemLongClick(itemView: View, position: Int, identifier: String)
     }
 }

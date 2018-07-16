@@ -61,20 +61,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showFavouritePlaces(favouritePlaces: List<Place>) {
         adapter = MainAdapter(favouritePlaces.toMutableList(), this)
 
-        adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
+        adapter.setOnItemClickListener(object: MainAdapter.ItemListener {
             override fun onItemClick(itemView: View, position: Int) {
                 openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
 
             }
-        })
-
-        adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
             override fun onItemLongClick(itemView: View, position: Int, identifier: String) {
-//                showAlertDialog(itemView.placeNameTextView.text.toString())
                 showAlertDialog(identifier)
             }
-
         })
+
         recyclerViewPlaces.adapter = adapter
     }
 
@@ -84,18 +80,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         } else {
             adapter = MainAdapter(mutableListOf(favouritePlace), this)
 
-            adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
+            adapter.setOnItemClickListener(object: MainAdapter.ItemListener {
                 override fun onItemClick(itemView: View, position: Int) {
                     openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
-                }
-            })
 
-            adapter.setOnItemLongClickListener(object : MainAdapter.OnItemLongClickListener {
+                }
                 override fun onItemLongClick(itemView: View, position: Int, identifier: String) {
                     showAlertDialog(identifier)
                 }
-
             })
+
             recyclerViewPlaces.adapter = adapter
         }
     }
