@@ -1,4 +1,4 @@
-package com.example.razli.weatherappsb.view
+package com.example.razli.weatherappsb.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.example.razli.weatherappsb.R
-import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
-import com.example.razli.weatherappsb.presenter.MainPresenter
-import com.example.razli.weatherappsb.util.MainAdapter
 import com.example.razli.weatherappsb.forecast.ForecastActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.place_list_item.view.*

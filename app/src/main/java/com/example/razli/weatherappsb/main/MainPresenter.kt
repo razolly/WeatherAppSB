@@ -1,11 +1,10 @@
-package com.example.razli.weatherappsb.presenter
+package com.example.razli.weatherappsb.main
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.widget.Toast
-import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.util.Repository
 import retrofit2.Call

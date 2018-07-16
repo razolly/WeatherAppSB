@@ -1,11 +1,10 @@
-package com.example.razli.weatherappsb.util
+package com.example.razli.weatherappsb.main
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
@@ -17,7 +16,7 @@ private const val LAYOUT_DARK = 1
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
     : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
 
-    private lateinit var listener: MainAdapter.ItemListener
+    private lateinit var listener: ItemListener
 
     fun setOnItemClickListener(listener: ItemListener) {
         this.listener = listener
@@ -62,7 +61,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         notifyItemInserted(favouritePlaces.size - 1)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.CustomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
 
         var placeView: View? = null
 

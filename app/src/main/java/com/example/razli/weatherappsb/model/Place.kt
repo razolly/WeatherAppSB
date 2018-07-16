@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Place(@Json(name = "main")
+data class Place(@Json(name = "com/example/razli/weatherappsb/main")
                  val weatherDetail: WeatherDetail,
 
                  @Json(name = "weather")
