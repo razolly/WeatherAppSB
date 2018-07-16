@@ -46,4 +46,9 @@ class Repository private constructor() {
         val call = networkApi.getPlaceWeather(placeName)
         call.enqueue(callback)
     }
+
+    fun getWeatherForecast(placeName: String, callback: Callback<List<Place>>) {
+        val call = networkApi.getPlaceWeatherForecast(placeName)
+        call.enqueue(callback)
+    }
 }

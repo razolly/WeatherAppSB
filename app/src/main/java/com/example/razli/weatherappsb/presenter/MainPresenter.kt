@@ -84,7 +84,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     override fun onFailure(call: Call<Place>?, t: Throwable?) {
                         view.showError("Failed to get weather details :(")
                         Toast.makeText(context, "Failed to get weather details :(", Toast.LENGTH_SHORT).show()
-
                     }
 
                     override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
@@ -114,7 +113,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     }
 
     override fun removePlace(place: String) {
-        //val placeConcatenated = place.split(",")
 
         favPlaceStrings.remove(place)
 

@@ -12,7 +12,7 @@ import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.presenter.MainPresenter
 import com.example.razli.weatherappsb.util.MainAdapter
-import com.example.razli.weatherappsb.weatherForecast.WeatherForecastActivity
+import com.example.razli.weatherappsb.forecast.ForecastActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.place_list_item.view.*
 
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun openWeatherForecastActivity(place: String) {
-        val intent = Intent(this, WeatherForecastActivity::class.java)
+        val intent = Intent(this, ForecastActivity::class.java)
         intent.putExtra(STRING_KEY, place)
         startActivity(intent)
     }

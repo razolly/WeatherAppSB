@@ -29,7 +29,8 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         this.listener = listener
     }
 
-    // region LongClick
+    // Vince, I tried to rearrange these, but kept on getting compile errors even after
+    // cleaning and rebuilding the project
 
     private lateinit var longListener: OnItemLongClickListener
 
@@ -40,8 +41,6 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
         this.longListener = listener
     }
-
-    // endregion
 
     // Default Version (White Background)
     inner class CustomViewHolder(val view: View)

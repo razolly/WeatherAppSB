@@ -13,6 +13,9 @@ data class Place(@Json(name = "main")
                  @Json(name = "sys")
                  val countryDetail: CountryDetail,
 
+                 @Json(name = "dt_txt")
+                 var forecastDate: String = "",
+
                  val name: String,
 
                  var placeIdentifier: String = "",
