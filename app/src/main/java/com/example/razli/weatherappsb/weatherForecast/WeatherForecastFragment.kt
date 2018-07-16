@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.support.v4.app.Fragment
 import android.view.View
 import com.example.razli.weatherappsb.R
+import com.example.razli.weatherappsb.model.Place
 
 class WeatherForecastFragment : Fragment() {
 
     private var mPage: Int = 0
+
+    private lateinit var place: Place
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
