@@ -11,5 +11,7 @@ interface ForecastContract {
 
     interface Presenter : BasePresenter {
 
+        fun getWeatherForecast(place: String)
+
     }
 }

@@ -1,18 +1,12 @@
 package com.example.razli.weatherappsb.util
 
+import com.example.razli.weatherappsb.model.FullForecast
 import com.example.razli.weatherappsb.model.Place
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.util.*
 
 class Repository private constructor() {
 
@@ -47,7 +41,7 @@ class Repository private constructor() {
         call.enqueue(callback)
     }
 
-    fun getWeatherForecast(placeName: String, callback: Callback<List<Place>>) {
+    fun getWeatherForecast(placeName: String, callback: Callback<FullForecast>) {
         val call = networkApi.getPlaceWeatherForecast(placeName)
         call.enqueue(callback)
     }

@@ -9,10 +9,6 @@ class ForecastFragmentAdapter(fm: FragmentManager, private val context: Context)
     private val PAGE_COUNT = 5
     private val tabTitles = arrayOf("Day1", "Day2", "Day3", "Day4", "Day5")
 
-    init {
-        println("Fragment adapter initialized")
-    }
-
     override fun getCount(): Int {
         return PAGE_COUNT
     }
