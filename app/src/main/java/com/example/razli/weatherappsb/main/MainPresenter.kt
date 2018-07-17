@@ -47,6 +47,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                             }
 
                             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
+
                                 if (response != null && response.isSuccessful && response.body() != null) {
 
                                     val placeInfo = response.body() as Place
