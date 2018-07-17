@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.support.v4.app.Fragment
 import android.view.View
 import com.example.razli.weatherappsb.R
+import com.example.razli.weatherappsb.model.WeatherForecast
 
 class ForecastFragment : Fragment(), ForecastContract.View {
 
@@ -44,6 +45,10 @@ class ForecastFragment : Fragment(), ForecastContract.View {
 
             return fragment
         }
+    }
+
+    override fun displayWeatherForecast(forecast: WeatherForecast) {
+
     }
 
     override fun onStart() {
