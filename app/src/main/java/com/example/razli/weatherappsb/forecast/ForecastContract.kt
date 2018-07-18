@@ -8,8 +8,6 @@ interface ForecastContract {
 
     interface View : BaseView<Presenter> {
 
-        fun passWeatherForecastToFragments(forecastList: List<WeatherForecast>)
-
     }
 
     interface Presenter : BasePresenter {

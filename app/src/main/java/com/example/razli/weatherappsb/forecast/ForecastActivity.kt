@@ -4,19 +4,19 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.razli.weatherappsb.R
+import com.example.razli.weatherappsb.model.FullForecast
 import com.example.razli.weatherappsb.model.WeatherForecast
+import com.example.razli.weatherappsb.util.Repository
 import kotlinx.android.synthetic.main.activity_weather_forecast.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ForecastActivity : AppCompatActivity(), ForecastContract.View {
 
-    override fun passWeatherForecastToFragments(forecastList: List<WeatherForecast>) {
-//        val args = Bundle()
-//        val userProfileString = userProfileJsonObject.toString()
-//        args.putString("userProfileString", userProfileString)
-//        fragmentUserProfile.setArguments(args)
-    }
-
     private lateinit var presenter: ForecastContract.Presenter
+
+    var fList: List<WeatherForecast> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +27,10 @@ class ForecastActivity : AppCompatActivity(), ForecastContract.View {
 
         presenter = ForecastPresenter(this)
         setPresenter(presenter)
+        presenter.start()
+
+        val place = intent.getStringExtra("PLACE_NAME")
+        getWeatherForecast(place)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -34,15 +38,26 @@ class ForecastActivity : AppCompatActivity(), ForecastContract.View {
         sliding_tabs.setupWithViewPager(viewpager)
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.start()
-
-        val place = intent.getStringExtra("PLACE_NAME")
-        presenter.getWeatherForecast(place)
-    }
-
     override fun setPresenter(presenter: ForecastContract.Presenter) {
         this.presenter = presenter
+    }
+
+    private fun getWeatherForecast(place: String) {
+        val repository = Repository.instance
+
+        repository.getWeatherForecast(place,
+                object : Callback<FullForecast> {
+                    override fun onFailure(call: Call<FullForecast>?, t: Throwable?) {
+                        println("onFailure")
+                    }
+
+                    override fun onResponse(call: Call<FullForecast>?, response: Response<FullForecast>?) {
+                        if (response != null && response.isSuccessful && response.body() != null) {
+
+                            val forecastObj = response.body() as FullForecast
+                            fList = forecastObj.forecastList
+                        }
+                    }
+                })
     }
 }
