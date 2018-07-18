@@ -50,7 +50,6 @@ data class WeatherDetail(@Json(name = "temp")
                          val temperature: Double,
                          val temp_min: Double,
                          val temp_max: Double) {
-
 }
 
 @JsonClass(generateAdapter = true)

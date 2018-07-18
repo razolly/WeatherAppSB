@@ -9,6 +9,9 @@ import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.WeatherForecast
 
 class ForecastFragment : Fragment(), ForecastContract.View {
+    override fun passWeatherForecastToFragments(forecastList: List<WeatherForecast>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private var pageNo: Int = 0
 
@@ -45,10 +48,6 @@ class ForecastFragment : Fragment(), ForecastContract.View {
 
             return fragment
         }
-    }
-
-    override fun displayWeatherForecast(forecast: WeatherForecast) {
-
     }
 
     override fun onStart() {
