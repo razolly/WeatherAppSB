@@ -30,6 +30,12 @@ class ForecastFragment : Fragment(), ForecastContract.View {
         // todo fill up views with info. See the MainAdapter of the RecyclerView
 //        val textView = view as TextView
 //        textView.text = "Fragment #$pageNo"
+
+//        val forecastObj = arguments?.get("FORECAST_KEY")
+//        val forecastObj = arguments?.getBundle("FORECAST_KEY")
+        val forecastObj = arguments?.getParcelable("FORECAST_KEY")
+        println("From fragment, managed to get data!: $forecastObj")
+
         return view
     }
 

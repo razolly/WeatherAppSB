@@ -2,6 +2,7 @@ package com.example.razli.weatherappsb.forecast
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
 import android.widget.Toast
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.FullForecast
@@ -12,9 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ForecastActivity : AppCompatActivity(), ForecastContract.View {
-
-    private lateinit var presenter: ForecastContract.Presenter
+class ForecastActivity : AppCompatActivity() {
 
     var fList: List<WeatherForecast> = mutableListOf()
 
@@ -22,12 +21,7 @@ class ForecastActivity : AppCompatActivity(), ForecastContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_forecast)
 
-        // placeTextView.text = intent.getStringExtra("PLACE_NAME")
         Toast.makeText(this, intent.getStringExtra("PLACE_NAME"), Toast.LENGTH_SHORT).show()
-
-        presenter = ForecastPresenter(this)
-        setPresenter(presenter)
-        presenter.start()
 
         val place = intent.getStringExtra("PLACE_NAME")
         getWeatherForecast(place)
@@ -36,10 +30,6 @@ class ForecastActivity : AppCompatActivity(), ForecastContract.View {
 
         viewpager.adapter = ForecastFragmentAdapter(supportFragmentManager, this)
         sliding_tabs.setupWithViewPager(viewpager)
-    }
-
-    override fun setPresenter(presenter: ForecastContract.Presenter) {
-        this.presenter = presenter
     }
 
     private fun getWeatherForecast(place: String) {
@@ -55,7 +45,14 @@ class ForecastActivity : AppCompatActivity(), ForecastContract.View {
                         if (response != null && response.isSuccessful && response.body() != null) {
 
                             val forecastObj = response.body() as FullForecast
-                            fList = forecastObj.forecastList
+                            //fList = forecastObj.forecastList
+
+                            // Pass data to Fragments
+                            val bundle = Bundle()
+                            bundle.putParcelable("FORECAST_KEY", forecastObj)
+
+                            val frag = ForecastFragment()
+                            frag.arguments = bundle
                         }
                     }
                 })
