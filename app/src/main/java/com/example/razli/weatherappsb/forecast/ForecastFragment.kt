@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.View
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.FullForecast
-import com.example.razli.weatherappsb.model.WeatherForecast
+import kotlinx.android.synthetic.main.place_list_item.*
 
 class ForecastFragment : Fragment(), ForecastContract.View {
 
@@ -31,24 +31,26 @@ class ForecastFragment : Fragment(), ForecastContract.View {
         // todo fill up views with info. See the MainAdapter of the RecyclerView
 
 //        val forecastObj = arguments?.get("FORECAST_KEY")
-        val forecastObj = arguments?.getBundle("FORECAST_KEY")
+//        val forecastObj = arguments?.getBundle("FORECAST_KEY")
 //        val forecastObj = savedInstanceState!!["FORECAST_KEY"]
-        //val forecastObj = arguments?.getParcelable("FORECAST_KEY")
+        val forecastObj: FullForecast? = arguments?.getParcelable(FORECAST_KEY)
+        val pageNo = arguments?.get(ARG_PAGE)
         println("From fragment, managed to get data!: $forecastObj")
+
+
 
         return view
     }
 
     companion object {
-        val ARG_PAGE = "ARG_PAGE"
+        const val ARG_PAGE = "ARG_PAGE"
+        const val FORECAST_KEY = "FORECAST_KEY"
 
         fun newInstance(page: Int, forecastObj: FullForecast): ForecastFragment {
 
-            println("Fragment new instance: $forecastObj")
-
             val bundle = Bundle()
             bundle.putInt(ARG_PAGE, page)
-            bundle.putParcelable("FORECAST_KEY", forecastObj)
+            bundle.putParcelable(FORECAST_KEY, forecastObj)
 
             val fragment = ForecastFragment()
             fragment.arguments = bundle

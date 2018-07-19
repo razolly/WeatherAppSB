@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         adapter.setOnItemClickListener(object: MainAdapter.ItemListener {
             override fun onItemClick(itemView: View, position: Int) {
-                openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
+                openWeatherForecastActivity(itemView.frag_placeNameTextView.text.toString())
 
             }
             override fun onItemLongClick(itemView: View, position: Int, identifier: String) {
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
             adapter.setOnItemClickListener(object: MainAdapter.ItemListener {
                 override fun onItemClick(itemView: View, position: Int) {
-                    openWeatherForecastActivity(itemView.placeNameTextView.text.toString())
+                    openWeatherForecastActivity(itemView.frag_placeNameTextView.text.toString())
 
                 }
                 override fun onItemLongClick(itemView: View, position: Int, identifier: String) {
