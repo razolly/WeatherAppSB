@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.support.v4.app.Fragment
 import android.view.View
 import com.example.razli.weatherappsb.R
+import com.example.razli.weatherappsb.model.FullForecast
 import com.example.razli.weatherappsb.model.WeatherForecast
 
 class ForecastFragment : Fragment(), ForecastContract.View {
@@ -28,12 +29,11 @@ class ForecastFragment : Fragment(), ForecastContract.View {
         setPresenter(wfPresenter)
 
         // todo fill up views with info. See the MainAdapter of the RecyclerView
-//        val textView = view as TextView
-//        textView.text = "Fragment #$pageNo"
 
 //        val forecastObj = arguments?.get("FORECAST_KEY")
-//        val forecastObj = arguments?.getBundle("FORECAST_KEY")
-        val forecastObj = arguments?.getParcelable("FORECAST_KEY")
+        val forecastObj = arguments?.getBundle("FORECAST_KEY")
+//        val forecastObj = savedInstanceState!!["FORECAST_KEY"]
+        //val forecastObj = arguments?.getParcelable("FORECAST_KEY")
         println("From fragment, managed to get data!: $forecastObj")
 
         return view
@@ -42,12 +42,16 @@ class ForecastFragment : Fragment(), ForecastContract.View {
     companion object {
         val ARG_PAGE = "ARG_PAGE"
 
-        fun newInstance(page: Int): ForecastFragment {
-            val args = Bundle()
-            args.putInt(ARG_PAGE, page)
+        fun newInstance(page: Int, forecastObj: FullForecast): ForecastFragment {
+
+            println("Fragment new instance: $forecastObj")
+
+            val bundle = Bundle()
+            bundle.putInt(ARG_PAGE, page)
+            bundle.putParcelable("FORECAST_KEY", forecastObj)
 
             val fragment = ForecastFragment()
-            fragment.arguments = args
+            fragment.arguments = bundle
 
             return fragment
         }
@@ -60,9 +64,5 @@ class ForecastFragment : Fragment(), ForecastContract.View {
 
     override fun setPresenter(presenter: ForecastContract.Presenter) {
         wfPresenter = presenter
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 }

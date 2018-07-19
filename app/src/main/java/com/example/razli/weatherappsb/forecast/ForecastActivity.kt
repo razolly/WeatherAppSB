@@ -28,8 +28,9 @@ class ForecastActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        viewpager.adapter = ForecastFragmentAdapter(supportFragmentManager, this)
-        sliding_tabs.setupWithViewPager(viewpager)
+        // todo uncomment. trying to put this in onResponse
+//        viewpager.adapter = ForecastFragmentAdapter(supportFragmentManager, this, 5)
+//        sliding_tabs.setupWithViewPager(viewpager)
     }
 
     private fun getWeatherForecast(place: String) {
@@ -47,12 +48,15 @@ class ForecastActivity : AppCompatActivity() {
                             val forecastObj = response.body() as FullForecast
                             //fList = forecastObj.forecastList
 
-                            // Pass data to Fragments
-                            val bundle = Bundle()
-                            bundle.putParcelable("FORECAST_KEY", forecastObj)
+                            viewpager.adapter = ForecastFragmentAdapter(supportFragmentManager, applicationContext, 5, forecastObj)
+                            sliding_tabs.setupWithViewPager(viewpager)
 
-                            val frag = ForecastFragment()
-                            frag.arguments = bundle
+                            // Set arguments for fragment
+                            val bundle = Bundle()
+                            bundle.putParcelable("FORECAST_OBJ", forecastObj)
+
+//                            val fragment = ForecastFragment()
+//                            fragment.arguments = bundle
                         }
                     }
                 })
