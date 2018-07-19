@@ -28,7 +28,7 @@ class ForecastListAdapter(val forecastList: List<WeatherForecast>)
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         // todo pass values for forecast here
-        holder.view.placeNameTextView.text = "Country"
+        holder.view.frag_temperatureTextView.text = "30 degrees"
         holder.view.frag_timeTextView.text = "9am"
     }
 }
