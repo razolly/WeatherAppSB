@@ -56,7 +56,7 @@ class ForecastFragment : Fragment(), ForecastContract.View {
 
         val forecastObj: FullForecast? = arguments?.getParcelable(FORECAST_KEY)
 
-        adapter = ForecastListAdapter(forecastObj!!.forecastList)
+        adapter = ForecastListAdapter(forecastObj!!.forecastList, context!!)
         recycler_view_forecast.adapter = adapter
         recycler_view_forecast.layoutManager = LinearLayoutManager(context)
     }

@@ -1,15 +1,18 @@
 package com.example.razli.weatherappsb.forecast
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.WeatherForecast
 import kotlinx.android.synthetic.main.fragment_list_item.view.*
 import kotlinx.android.synthetic.main.place_list_item.view.*
+import kotlin.coroutines.experimental.coroutineContext
 
-class ForecastListAdapter(val forecastList: List<WeatherForecast>)
+class ForecastListAdapter(val forecastList: List<WeatherForecast>, val context: Context)
     : RecyclerView.Adapter<ForecastListAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
@@ -28,7 +31,10 @@ class ForecastListAdapter(val forecastList: List<WeatherForecast>)
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         // todo pass values for forecast here
-        holder.view.frag_temperatureTextView.text = "30 degrees"
-        holder.view.frag_timeTextView.text = "9am"
+        holder.view.frag_temperatureTextView.text = forecastList[position].weatherDetail.temperature.toString()
+        holder.view.frag_timeTextView.text = forecastList[position].date
+
+        val url = "http://openweathermap.org/img/w/" + forecastList[position].weatherIcon.first().icon + ".png"
+        Glide.with(context).load(url).into(holder.view.frag_imageView)
     }
 }
