@@ -84,13 +84,13 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
 
         holder.view.isLongClickable = true
 
-        holder.view.frag_placeNameTextView.text = favouritePlaces[position].name + ", " + favouritePlaces[position].countryDetail.country
-        holder.view.frag_temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
-        holder.view.frag_lastUpdatedTextView.text = "Last Updated: " + favouritePlaces[position].lastUpdated
+        holder.view.placeNameTextView.text = favouritePlaces[position].name + ", " + favouritePlaces[position].countryDetail.country
+        holder.view.temperatureTextView.text = "Temperature: " + favouritePlaces[position].weatherDetail.temperature + "\u00b0" + "c"
+        holder.view.lastUpdatedTextView.text = "Last Updated: " + favouritePlaces[position].lastUpdated
 
         val url = "http://openweathermap.org/img/w/" + favouritePlaces[position].weatherIcon.first().icon + ".png"
 
-        Glide.with(context).load(url).into(holder.view.frag_imageView)
+        Glide.with(context).load(url).into(holder.view.imageView)
     }
 
     override fun getItemCount(): Int {

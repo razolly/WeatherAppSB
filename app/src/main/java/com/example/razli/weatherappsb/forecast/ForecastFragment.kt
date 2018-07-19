@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.View
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.FullForecast
+import kotlinx.android.synthetic.main.fragment_page.*
+import kotlinx.android.synthetic.main.fragment_page.view.*
 import kotlinx.android.synthetic.main.place_list_item.*
 
 class ForecastFragment : Fragment(), ForecastContract.View {
@@ -28,16 +30,14 @@ class ForecastFragment : Fragment(), ForecastContract.View {
         wfPresenter = ForecastPresenter(this)
         setPresenter(wfPresenter)
 
-        // todo fill up views with info. See the MainAdapter of the RecyclerView
-
-//        val forecastObj = arguments?.get("FORECAST_KEY")
-//        val forecastObj = arguments?.getBundle("FORECAST_KEY")
-//        val forecastObj = savedInstanceState!!["FORECAST_KEY"]
         val forecastObj: FullForecast? = arguments?.getParcelable(FORECAST_KEY)
         val pageNo = arguments?.get(ARG_PAGE)
         println("From fragment, managed to get data!: $forecastObj")
 
+        // todo fill up views with info. See the MainAdapter of the RecyclerView
+        view.frag_placeNameTextView.text = forecastObj!!.forecastList[0].weatherDetail.temperature.toString()
 
+        // add recyclerview adapter here
 
         return view
     }
