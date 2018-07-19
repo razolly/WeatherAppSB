@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:clickable="true"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:focusable="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!--<TextView-->
+    <!--android:id="@+id/frag_placeNameTextView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="Singapore"-->
+    <!--android:textSize="24sp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--tools:text="Singapore" />-->
 
     <TextView
-        android:id="@+id/frag_placeNameTextView"
+        android:id="@+id/frag_temperatureTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Singapore"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:text="Temperature: 20 deg celcius"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Singapore" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-<TextView
-    android:id="@+id/frag_temperatureTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Temperature: 20 deg celcius"
-    android:textSize="20sp"
-    app:layout_constraintStart_toStartOf="@+id/frag_placeNameTextView"
-    app:layout_constraintTop_toBottomOf="@+id/frag_placeNameTextView" />
+    <TextView
+        android:id="@+id/frag_timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Time: 5:00PM"
+        app:layout_constraintStart_toStartOf="@+id/frag_temperatureTextView"
+        app:layout_constraintTop_toBottomOf="@+id/frag_temperatureTextView" />
 
-<TextView
-    android:id="@+id/frag_lastUpdatedTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="100dp"
-    android:text="Last Updated: Jun 27, 2018, 5:00PM"
-    app:layout_constraintStart_toStartOf="@+id/frag_temperatureTextView"
-    app:layout_constraintTop_toBottomOf="@+id/frag_temperatureTextView" />
-
-<ImageView
-    android:id="@+id/frag_imageView"
-    android:layout_width="61dp"
-    android:layout_height="59dp"
-    android:layout_marginBottom="8dp"
-    android:layout_marginEnd="0dp"
-    android:layout_marginStart="46dp"
-    android:layout_marginTop="8dp"
-    app:layout_constraintBottom_toBottomOf="@+id/frag_lastUpdatedTextView"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/frag_lastUpdatedTextView"
-    app:layout_constraintTop_toTopOf="@+id/frag_placeNameTextView"
-    app:srcCompat="@mipmap/ic_launcher_round" />
+    <ImageView
+        android:id="@+id/frag_imageView"
+        android:layout_width="53dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.82"
+        app:layout_constraintStart_toEndOf="@+id/frag_temperatureTextView"
+        app:layout_constraintTop_toTopOf="@+id/frag_temperatureTextView"
+        app:srcCompat="@mipmap/ic_launcher_round" />
 </android.support.constraint.ConstraintLayout>
 

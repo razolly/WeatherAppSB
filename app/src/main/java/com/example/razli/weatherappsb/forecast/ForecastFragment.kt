@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.support.v4.app.Fragment
 import android.view.View
+import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.FullForecast
 import kotlinx.android.synthetic.main.fragment_page.*
 import kotlinx.android.synthetic.main.fragment_page.view.*
 import kotlinx.android.synthetic.main.place_list_item.*
+import kotlinx.android.synthetic.main.place_list_item.view.*
 
 class ForecastFragment : Fragment(), ForecastContract.View {
 
@@ -35,9 +37,13 @@ class ForecastFragment : Fragment(), ForecastContract.View {
         println("From fragment, managed to get data!: $forecastObj")
 
         // todo fill up views with info. See the MainAdapter of the RecyclerView
-        view.frag_placeNameTextView.text = forecastObj!!.forecastList[0].weatherDetail.temperature.toString()
+        view.frag_temperatureTextView.text = "Temperature: " + forecastObj!!.forecastList[0].weatherDetail.temperature.toString() + "\u00b0" + "c"
+        view.frag_timeTextView.text = "Time: ${forecastObj!!.forecastList[0].date}"
 
-        // add recyclerview adapter here
+        val url = "http://openweathermap.org/img/w/" + forecastObj!!.forecastList[0].weatherIcon.first().icon + ".png"
+        Glide.with(this).load(url).into(view.frag_imageView)
+
+        // todo add recyclerview adapter here
 
         return view
     }
