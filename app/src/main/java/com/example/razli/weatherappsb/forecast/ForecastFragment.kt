@@ -27,7 +27,7 @@ class ForecastFragment : Fragment(), ForecastContract.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val view = inflater.inflate(R.layout.fragment_list_item, container, false)
+
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
         wfPresenter = ForecastPresenter(this)

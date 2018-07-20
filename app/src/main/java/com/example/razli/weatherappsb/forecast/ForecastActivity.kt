@@ -46,7 +46,6 @@ class ForecastActivity : AppCompatActivity() {
                         if (response != null && response.isSuccessful && response.body() != null) {
 
                             val forecastObj = response.body() as FullForecast
-                            //fList = forecastObj.forecastList
 
                             viewpager.adapter = ForecastFragmentAdapter(supportFragmentManager, applicationContext, 5, forecastObj)
                             sliding_tabs.setupWithViewPager(viewpager)
@@ -54,9 +53,6 @@ class ForecastActivity : AppCompatActivity() {
                             // Set arguments for fragment
                             val bundle = Bundle()
                             bundle.putParcelable("FORECAST_OBJ", forecastObj)
-
-//                            val fragment = ForecastFragment()
-//                            fragment.arguments = bundle
                         }
                     }
                 })

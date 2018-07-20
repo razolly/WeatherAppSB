@@ -31,7 +31,7 @@ class ForecastListAdapter(val forecastList: List<WeatherForecast>, val context: 
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         // todo pass values for forecast here
-        holder.view.frag_temperatureTextView.text = forecastList[position].weatherDetail.temperature.toString()
+        holder.view.frag_temperatureTextView.text = forecastList[position].weatherDetail.temperature.toString() + "\u00b0" + "c"
         holder.view.frag_timeTextView.text = forecastList[position].date
 
         val url = "http://openweathermap.org/img/w/" + forecastList[position].weatherIcon.first().icon + ".png"
