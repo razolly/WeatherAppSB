@@ -11,6 +11,7 @@ import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.forecast.ForecastActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.error_page.*
 import kotlinx.android.synthetic.main.place_list_item.view.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -118,6 +119,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showError(error: String) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT)
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showErrorLayout() {
+        setContentView(R.layout.error_page)
+
+        retry_button.setOnClickListener { Toast.makeText(this, "Retried!", Toast.LENGTH_SHORT).show() }
     }
 }

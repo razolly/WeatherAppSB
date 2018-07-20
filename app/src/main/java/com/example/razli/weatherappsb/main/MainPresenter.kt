@@ -2,6 +2,8 @@ package com.example.razli.weatherappsb.main
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.widget.Toast
@@ -29,7 +31,12 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         // sharedPreferences.edit().clear().commit()     // deletes everything
 
-        if (sharedPreferences.contains(STRING_KEY_SHAREDPREF)) {
+        // Check for internet connection
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        if (sharedPreferences.contains(STRING_KEY_SHAREDPREF) && isConnected) {
 
             favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY_SHAREDPREF, hashSetOf("")))
 

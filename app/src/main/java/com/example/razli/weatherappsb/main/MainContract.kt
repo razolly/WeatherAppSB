@@ -18,6 +18,8 @@ interface MainContract {
 
         fun showAlertDialog(place: String)
 
+        fun showErrorLayout()
+
     }
 
     interface Presenter : BasePresenter {
