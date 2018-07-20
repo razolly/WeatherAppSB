@@ -28,7 +28,6 @@ class ForecastActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // todo uncomment. trying to put this in onResponse
 //        viewpager.adapter = ForecastFragmentAdapter(supportFragmentManager, this, 5)
 //        sliding_tabs.setupWithViewPager(viewpager)
     }

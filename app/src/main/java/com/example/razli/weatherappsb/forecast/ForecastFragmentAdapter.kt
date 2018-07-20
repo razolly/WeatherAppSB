@@ -50,18 +50,15 @@ class ForecastFragmentAdapter(fm: FragmentManager, private val context: Context,
     }
 
     override fun getItem(position: Int): Fragment {
-        // todo create switch statement. Pass respective forecastDay according to position (in params)
 
-        val forecastObj: FullForecast
-
-        when (position) {
-            0 -> forecastObj = FullForecast(forecastDay0)
-            1 -> forecastObj = FullForecast(forecastDay1)
-            2 -> forecastObj = FullForecast(forecastDay2)
-            3 -> forecastObj = FullForecast(forecastDay3)
-            4 -> forecastObj = FullForecast(forecastDay4)
+        val forecastObj: FullForecast = when (position) {
+            0 -> FullForecast(forecastDay0)
+            1 -> FullForecast(forecastDay1)
+            2 -> FullForecast(forecastDay2)
+            3 -> FullForecast(forecastDay3)
+            4 -> FullForecast(forecastDay4)
             else -> {
-                forecastObj = FullForecast(forecastDay0)
+                FullForecast(forecastDay0)
             }
         }
 
@@ -69,7 +66,6 @@ class ForecastFragmentAdapter(fm: FragmentManager, private val context: Context,
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        // Generate title based on item position
         return tabTitles[position]
     }
 

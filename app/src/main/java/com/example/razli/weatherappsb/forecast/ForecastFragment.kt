@@ -18,7 +18,6 @@ class ForecastFragment : Fragment(), ForecastContract.View {
     private var pageNo: Int = 0
 
     private lateinit var wfPresenter: ForecastContract.Presenter
-    //private lateinit var place: Place
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,21 +31,6 @@ class ForecastFragment : Fragment(), ForecastContract.View {
 
         wfPresenter = ForecastPresenter(this)
         setPresenter(wfPresenter)
-
-//        val forecastObj: FullForecast? = arguments?.getParcelable(FORECAST_KEY)
-//
-//        adapter = ForecastListAdapter(forecastObj!!.forecastList)
-//        recycler_view_forecast.adapter = adapter
-//        recycler_view_forecast.layoutManager = LinearLayoutManager(context)
-
-//        val pageNo = arguments?.get(ARG_PAGE)
-//        println("From fragment, managed to get data!: $forecastObj")
-//
-//        view.frag_temperatureTextView.text = "Temperature: " + forecastObj!!.forecastList[0].weatherDetail.temperature.toString() + "\u00b0" + "c"
-//        view.frag_timeTextView.text = "Time: ${forecastObj!!.forecastList[0].date}"
-//
-//        val url = "http://openweathermap.org/img/w/" + forecastObj!!.forecastList[0].weatherIcon.first().icon + ".png"
-//        Glide.with(this).load(url).into(view.frag_imageView)
 
         return view
     }

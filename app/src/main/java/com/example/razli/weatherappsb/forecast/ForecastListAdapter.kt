@@ -9,8 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import com.example.razli.weatherappsb.model.WeatherForecast
 import kotlinx.android.synthetic.main.fragment_list_item.view.*
-import kotlinx.android.synthetic.main.place_list_item.view.*
-import kotlin.coroutines.experimental.coroutineContext
 
 class ForecastListAdapter(val forecastList: List<WeatherForecast>, val context: Context)
     : RecyclerView.Adapter<ForecastListAdapter.CustomViewHolder>() {
@@ -30,7 +28,7 @@ class ForecastListAdapter(val forecastList: List<WeatherForecast>, val context: 
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        // todo pass values for forecast here
+
         holder.view.frag_temperatureTextView.text = forecastList[position].weatherDetail.temperature.toString() + "\u00b0" + "c"
         holder.view.frag_timeTextView.text = forecastList[position].date
 
