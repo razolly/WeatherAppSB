@@ -4,11 +4,9 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.bumptech.glide.Glide.init
 import com.example.razli.weatherappsb.model.FullForecast
 import com.example.razli.weatherappsb.model.WeatherForecast
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 class ForecastFragmentAdapter(fm: FragmentManager, private val context: Context, private val pageCount: Int, private val forecastObj: FullForecast)
@@ -42,7 +40,7 @@ class ForecastFragmentAdapter(fm: FragmentManager, private val context: Context,
                 dateList[4] -> forecastDay4.add(list[i])
                 else -> {
                     // Do nothing
-                    }
+                }
             }
         }
     }
@@ -53,6 +51,20 @@ class ForecastFragmentAdapter(fm: FragmentManager, private val context: Context,
 
     override fun getItem(position: Int): Fragment {
         // todo create switch statement. Pass respective forecastDay according to position (in params)
+
+        val forecastObj: FullForecast
+
+        when (position) {
+            0 -> forecastObj = FullForecast(forecastDay0)
+            1 -> forecastObj = FullForecast(forecastDay1)
+            2 -> forecastObj = FullForecast(forecastDay2)
+            3 -> forecastObj = FullForecast(forecastDay3)
+            4 -> forecastObj = FullForecast(forecastDay4)
+            else -> {
+                forecastObj = FullForecast(forecastDay0)
+            }
+        }
+
         return ForecastFragment.newInstance(position + 1, forecastObj)
     }
 
