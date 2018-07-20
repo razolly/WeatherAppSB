@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#818181"
     android:clickable="true"
     android:focusable="true">
 
@@ -14,6 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Temperature: 20 deg celcius"
+        android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Time: 5:00PM"
+        android:textColor="@android:color/background_light"
         app:layout_constraintStart_toStartOf="@+id/frag_temperatureTextView"
         app:layout_constraintTop_toBottomOf="@+id/frag_temperatureTextView" />
 

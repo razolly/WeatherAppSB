@@ -13,10 +13,8 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 class ForecastFragment : Fragment(), ForecastContract.View {
 
-    private lateinit var adapter: ForecastListAdapter
-
     private var pageNo: Int = 0
-
+    private lateinit var adapter: ForecastListAdapter
     private lateinit var wfPresenter: ForecastContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

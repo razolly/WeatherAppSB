@@ -12,7 +12,6 @@ import java.util.*
 class ForecastFragmentAdapter(fm: FragmentManager, private val context: Context, private val pageCount: Int, private val forecastObj: FullForecast)
     : FragmentPagerAdapter(fm) {
 
-    //    private val tabTitles = arrayOf("Day1", "Day2", "Day3", "Day4", "Day5")
     private val tabTitles = mutableListOf<String>()
 
     // If today is 20 July, values should be 20, 21, 22, 23, 24
