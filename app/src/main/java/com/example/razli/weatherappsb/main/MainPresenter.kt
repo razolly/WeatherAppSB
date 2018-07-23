@@ -1,11 +1,12 @@
-package com.example.razli.weatherappsb.presenter
+package com.example.razli.weatherappsb.main
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.widget.Toast
-import com.example.razli.weatherappsb.contract.MainContract
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.util.Repository
 import retrofit2.Call
@@ -14,10 +15,9 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class MainPresenter(private val view: MainContract.View, val context: Context) : MainContract.Presenter {
 
-    private val STRING_KEY = "favourite_place"
+    private val STRING_KEY_SHAREDPREF = "favourite_place"
 
     private lateinit var runnable: Runnable
     private var handler: Handler = Handler()
@@ -31,9 +31,14 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
         // sharedPreferences.edit().clear().commit()     // deletes everything
 
-        if (sharedPreferences.contains(STRING_KEY)) {
+        // Check for internet connection
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
-            favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY, hashSetOf("")))
+        if (sharedPreferences.contains(STRING_KEY_SHAREDPREF) && isConnected) {
+
+            favPlaceStrings.addAll(sharedPreferences.getStringSet(STRING_KEY_SHAREDPREF, hashSetOf("")))
 
             val size = favPlaceStrings.size
             val places = mutableListOf<Place>()
@@ -49,6 +54,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                             }
 
                             override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
+
                                 if (response != null && response.isSuccessful && response.body() != null) {
 
                                     val placeInfo = response.body() as Place
@@ -56,6 +62,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                                     val currentDate = sdf.format(Date())
 
                                     placeInfo.lastUpdated = currentDate
+                                    placeInfo.placeIdentifier = favoritePlace
 
                                     places.add(placeInfo)
 
@@ -84,7 +91,6 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                     override fun onFailure(call: Call<Place>?, t: Throwable?) {
                         view.showError("Failed to get weather details :(")
                         Toast.makeText(context, "Failed to get weather details :(", Toast.LENGTH_SHORT).show()
-
                     }
 
                     override fun onResponse(call: Call<Place>?, response: Response<Place>?) {
@@ -92,7 +98,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
 
                             // Saved to SharedPreferences & notify (via Toast)
                             favPlaceStrings.add(placeName)
-                            sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+                            sharedPreferences.edit().putStringSet(STRING_KEY_SHAREDPREF, favPlaceStrings).apply()
                             Toast.makeText(context, "$placeName added!", Toast.LENGTH_SHORT).show()
 
                             val placeInfo = response.body() as Place
@@ -100,6 +106,7 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
                             val currentDate = sdf.format(Date())
 
                             placeInfo.lastUpdated = currentDate
+                            placeInfo.placeIdentifier = placeName
 
                             view.showFavouritePlace(placeInfo)
 
@@ -113,11 +120,10 @@ class MainPresenter(private val view: MainContract.View, val context: Context) :
     }
 
     override fun removePlace(place: String) {
-        val placeConcatenated = place.split(",")
 
-        favPlaceStrings.remove(placeConcatenated[0])
+        favPlaceStrings.remove(place)
 
-        sharedPreferences.edit().putStringSet(STRING_KEY, favPlaceStrings).apply()
+        sharedPreferences.edit().putStringSet(STRING_KEY_SHAREDPREF, favPlaceStrings).apply()
 
         refreshPlaceList()
 

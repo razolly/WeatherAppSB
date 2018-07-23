@@ -1,4 +1,4 @@
-package com.example.razli.weatherappsb.contract
+package com.example.razli.weatherappsb.main
 
 import com.example.razli.weatherappsb.model.Place
 import com.example.razli.weatherappsb.util.BasePresenter
@@ -17,6 +17,8 @@ interface MainContract {
         fun showError(error: String)
 
         fun showAlertDialog(place: String)
+
+        fun showErrorLayout()
 
     }
 

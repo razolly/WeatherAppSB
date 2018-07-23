@@ -1,47 +1,26 @@
-package com.example.razli.weatherappsb.util
+package com.example.razli.weatherappsb.main
 
 import android.content.Context
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.razli.weatherappsb.R
 import kotlinx.android.synthetic.main.place_list_item.view.*
 import com.example.razli.weatherappsb.model.Place
 
+private const val LAYOUT_LIGHT = 0
+private const val LAYOUT_DARK = 1
+
 class MainAdapter(private val favouritePlaces: MutableList<Place>, private val context: Context)
     : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
 
-    val LAYOUT_LIGHT = 0
-    val LAYOUT_DARK = 1
+    private lateinit var listener: ItemListener
 
-    private lateinit var listener: OnItemClickListener
-
-    interface OnItemClickListener {
-        fun onItemClick(itemView: View, position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
+    fun setOnItemClickListener(listener: ItemListener) {
         this.listener = listener
     }
-
-    /*--------------------*/
-
-    private lateinit var longListener: OnItemLongClickListener
-
-    interface OnItemLongClickListener {
-        fun onItemLongClick(itemView: View, position: Int)
-    }
-
-    fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
-        this.longListener = listener
-    }
-
-    /*--------------------*/
 
     // Default Version (White Background)
     inner class CustomViewHolder(val view: View)
@@ -59,18 +38,18 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
 
         override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
-            longListener.onItemLongClick(view, position)
+            listener.onItemLongClick(view, position, favouritePlaces[position].placeIdentifier)
             return true
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-
-        return when {
-            favouritePlaces[position].weatherIcon.first().icon.contains('n') -> {
+        val icon = favouritePlaces[position].weatherIcon.first().icon.last()
+        return when (icon) {
+            'n' -> {
                 LAYOUT_DARK
             }
-            favouritePlaces[position].weatherIcon.first().icon.contains('d') -> {
+            'd' -> {
                 LAYOUT_LIGHT
             }
             else -> -1
@@ -82,7 +61,7 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
         notifyItemInserted(favouritePlaces.size - 1)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.CustomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
 
         var placeView: View? = null
 
@@ -117,5 +96,10 @@ class MainAdapter(private val favouritePlaces: MutableList<Place>, private val c
     override fun getItemCount(): Int {
 
         return favouritePlaces.size
+    }
+
+    interface ItemListener {
+        fun onItemClick(itemView: View, position: Int)
+        fun onItemLongClick(itemView: View, position: Int, identifier: String)
     }
 }
